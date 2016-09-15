@@ -267,7 +267,7 @@ namespace mcpputil
 #define MCPPALLOC_CONCURRENCY_LOCK_ASSUME(...) ::mcpputil::lock_assume_t MCPPALLOC_CONCURRENCY_LOCK_GUARD_VARIABLE(__VA_ARGS__);
 #define MCPPALLOC_CONCURRENCY_LOCK_GUARD_TAKE(x)                                                                                 \
   ::std::unique_lock<decltype(x)> MCPPALLOC_CONCURRENCY_LOCK_GUARD_VARIABLE(x, ::std::adopt_lock);                               \
-  ::mcpputil::assume_unlock(x);                                                                                                 \
+  ::mcpputil::assume_unlock(x);                                                                                                  \
   ::mcpputil::lock_assume_t MCPPALLOC_CONCURRENCY_LOCK_ASSUME_VARIABLE(x);
 namespace mcpputil
 {
