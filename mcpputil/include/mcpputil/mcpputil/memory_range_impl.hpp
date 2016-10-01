@@ -1,56 +1,43 @@
 #pragma once
+#include "unsafe_cast.hpp"
 namespace mcpputil
 {
-  template <typename Pointer_Type>
-  memory_range_t<Pointer_Type>::memory_range_t() noexcept(::std::is_nothrow_default_constructible<pointer_type>::value) = default;
-  template <typename Pointer_Type>
-  memory_range_t<Pointer_Type>::memory_range_t(pointer_type begin, pointer_type end) noexcept(
-      ::std::is_nothrow_move_constructible<pointer_type>::value)
-      : m_begin(::std::move(begin)), m_end(::std::move(end))
-  {
-  }
-  template <typename Pointer_Type>
-  memory_range_t<Pointer_Type>::memory_range_t(::std::pair<pointer_type, pointer_type> pair) noexcept(
-      ::std::is_nothrow_move_constructible<pointer_type>::value)
-      : m_begin(::std::move(pair.first)), m_end(::std::move(pair.second))
-  {
-  }
   template <typename Pointer_Type>
   void
   memory_range_t<Pointer_Type>::set_begin(pointer_type begin) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
   {
-    m_begin = ::std::move(begin);
+    ::std::get<0>(*this) = ::std::move(begin);
   }
   template <typename Pointer_Type>
   void memory_range_t<Pointer_Type>::set_end(pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
   {
-    m_end = ::std::move(end);
+    ::std::get<1>(*this) = ::std::move(end);
   }
   template <typename Pointer_Type>
   void memory_range_t<Pointer_Type>::set(pointer_type begin,
                                          pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
   {
-    m_begin = ::std::move(begin);
-    m_end = ::std::move(end);
+    ::std::get<0>(*this) = ::std::move(begin);
+    ::std::get<1>(*this) = ::std::move(end);
   }
   template <typename Pointer_Type>
   void memory_range_t<Pointer_Type>::set(::std::pair<pointer_type, pointer_type> pair) noexcept(
       ::std::is_nothrow_move_assignable<pointer_type>::value)
   {
-    m_begin = ::std::move(pair.first);
-    m_end = ::std::move(pair.second);
+    ::std::get<0>(*this) = ::std::move(pair.first);
+    ::std::get<1>(*this) = ::std::move(pair.second);
   }
   template <typename Pointer_Type>
   auto memory_range_t<Pointer_Type>::begin() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value)
       -> pointer_type
   {
-    return m_begin;
+    return ::std::get<0>(*this);
   }
   template <typename Pointer_Type>
   auto memory_range_t<Pointer_Type>::end() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value)
       -> pointer_type
   {
-    return m_end;
+    return ::std::get<1>(*this);
   }
   template <typename Pointer_Type>
   auto memory_range_t<Pointer_Type>::size() const noexcept -> size_type
@@ -68,6 +55,13 @@ namespace mcpputil
     return ptr >= begin() && ptr < end();
   }
   template <typename Pointer_Type>
+  template <typename New_Pointer_Type>
+  auto memory_range_t<Pointer_Type>::cast() const noexcept -> memory_range_t<New_Pointer_Type>
+  {
+    return memory_range_t<New_Pointer_Type>(unsafe_cast<New_Pointer_Type>(begin()), unsafe_cast<New_Pointer_Type>(end()));
+  }
+
+  template <typename Pointer_Type>
   auto memory_range_t<Pointer_Type>::contains(const memory_range_t<pointer_type> &range) const noexcept -> bool
   {
     return begin() <= range.begin() && range.end() <= end();
@@ -80,11 +74,6 @@ namespace mcpputil
     {
       return a.size() < b.size();
     };
-  }
-  template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::make_nullptr() noexcept -> memory_range_t<pointer_type>
-  {
-    return memory_range_t<pointer_type>(nullptr, nullptr);
   }
   template <typename Pointer_Type>
   auto operator==(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
@@ -104,8 +93,7 @@ namespace mcpputil
   template <typename Pointer_Type>
   ::std::ostream &operator<<(::std::ostream &stream, const memory_range_t<Pointer_Type> &range)
   {
-    stream << "(" << reinterpret_cast<void *>(range.begin()) << "," << reinterpret_cast<void *>(range.end()) << ")";
-    return stream;
+    return operator<<(stream, range.template cast<void *>());
   }
   template <typename Pointer_Type>
   auto size(const memory_range_t<Pointer_Type> &range)
