@@ -59,19 +59,6 @@ namespace mcpputil
   {
     return ((size + c_alignment - 1) >> c_align_pow2) << c_align_pow2;
   }
-
-#if defined(_DEBUG) || not defined(NDEBUG)
-#ifndef MCPPALLOC_DEBUG_LEVEL
-#define MCPPALLOC_DEBUG_LEVEL 0
-#endif
-#endif
-#ifndef MCPPALLOC_DEBUG_LEVEL
-#define MCPPALLOC_DEBUG_LEVEL 0
-#endif
-  /**
-   * \brief Current debug level.
-   **/
-  static const constexpr int c_debug_level = MCPPALLOC_DEBUG_LEVEL;
   /**
    * \brief Hide a pointer from garbage collection in a unspecified way.
    **/
@@ -87,17 +74,13 @@ namespace mcpputil
     return reinterpret_cast<void *>(~sz);
   }
 
-  namespace details
+  /**
+   * \brief Return 2^n.
+   **/
+  inline constexpr size_t pow2(int n)
   {
-    /**
-     * \brief Return 2^n.
-    **/
-    inline constexpr size_t pow2(int n)
-    {
-      return static_cast<size_t>(2) << (n - 1);
-    }
+    return static_cast<size_t>(2) << (n - 1);
   }
-  using details::pow2;
 
   /**
    * \brief Return inverse for size.
