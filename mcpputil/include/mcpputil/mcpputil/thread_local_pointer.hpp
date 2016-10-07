@@ -63,4 +63,11 @@ namespace mcpputil
     static thread_local pointer_type s_tlks;
 #endif
   };
+#ifdef __APPLE__
+  template <typename Pointer_Type>
+  pthread_key_t thread_local_pointer_t<Pointer_Type>::s_pkey;
+#else
+  template <typename Pointer_Type>
+  thread_local Pointer_Type thread_local_pointer_t<Pointer_Type>::s_tlks;
+#endif
 }
