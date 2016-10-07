@@ -2,6 +2,7 @@
 #include "declarations.hpp"
 #include <limits>
 #include <tuple>
+#include <utility>
 namespace mcpputil
 {
 
@@ -29,11 +30,17 @@ namespace mcpputil
 
     constexpr auto contains(const pointer_type &ptr) const noexcept -> bool;
     constexpr auto contains(const memory_range_t<pointer_type> &ptr) const noexcept -> bool;
+    template <typename T>
+    constexpr auto contains(T &&t) const noexcept -> bool;
 
     template <typename New_Pointer_Type>
     constexpr auto cast() const noexcept -> memory_range_t<New_Pointer_Type>;
 
     constexpr static auto size_comparator() noexcept;
+    ::std::tuple<pointer_type, pointer_type> as_tuple() const
+    {
+      return *this;
+    }
     inline static const this_type nullptr_{nullptr, nullptr};
 
     /*    constexpr operator ::std::pair<pointer_type, pointer_type>() const noexcept

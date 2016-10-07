@@ -68,6 +68,12 @@ namespace mcpputil
   {
     return begin() <= range.begin() && range.end() <= end();
   }
+  template <typename Pointer_Type>
+  template <typename T>
+  constexpr auto memory_range_t<Pointer_Type>::contains(T &&t) const noexcept -> bool
+  {
+    return contains(static_cast<const pointer_type &>(reinterpret_cast<pointer_type>(t)));
+  }
 
   template <typename Pointer_Type>
   constexpr auto memory_range_t<Pointer_Type>::size_comparator() noexcept
