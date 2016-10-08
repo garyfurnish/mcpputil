@@ -16,12 +16,11 @@ namespace mcpputil
     using size_type = size_t;
     using ::std::tuple<Pointer_Type, Pointer_Type>::tuple;
 
-	memory_range_t() noexcept(::std::is_nothrow_move_constructible<pointer_type>::value);
+    memory_range_t() noexcept(::std::is_nothrow_move_constructible<pointer_type>::value);
     void set_begin(pointer_type begin) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value);
     void set_end(pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value);
     void set(pointer_type begin, pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value);
-    void
-    set(::std::pair<pointer_type, pointer_type> pair) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value);
+    void set(::std::pair<pointer_type, pointer_type> pair) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value);
 
     constexpr auto begin() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value) -> pointer_type;
     constexpr auto end() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value) -> pointer_type;

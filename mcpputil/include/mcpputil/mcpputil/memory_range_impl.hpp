@@ -3,10 +3,9 @@
 namespace mcpputil
 {
   template <typename Pointer_Type>
-  memory_range_t<Pointer_Type>::memory_range_t() noexcept(::std::is_nothrow_move_constructible<pointer_type>::value) 
-	  : ::std::tuple<pointer_type, pointer_type>(nullptr, nullptr)
+  memory_range_t<Pointer_Type>::memory_range_t() noexcept(::std::is_nothrow_move_constructible<pointer_type>::value)
+      : ::std::tuple<pointer_type, pointer_type>(nullptr, nullptr)
   {
-
   }
   template <typename Pointer_Type>
   void
@@ -15,15 +14,13 @@ namespace mcpputil
     ::std::get<0>(*this) = ::std::move(begin);
   }
   template <typename Pointer_Type>
-  void
-  memory_range_t<Pointer_Type>::set_end(pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
+  void memory_range_t<Pointer_Type>::set_end(pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
   {
     ::std::get<1>(*this) = ::std::move(end);
   }
   template <typename Pointer_Type>
-  void
-  memory_range_t<Pointer_Type>::set(pointer_type begin,
-                                    pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
+  void memory_range_t<Pointer_Type>::set(pointer_type begin,
+                                         pointer_type end) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
   {
     ::std::get<0>(*this) = ::std::move(begin);
     ::std::get<1>(*this) = ::std::move(end);

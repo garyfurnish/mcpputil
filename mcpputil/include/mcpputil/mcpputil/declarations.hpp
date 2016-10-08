@@ -31,8 +31,10 @@
 #define MCPPALLOC_NO_INLINE __attribute__((noinline))
 #define mcpputil_likely(x) __builtin_expect(static_cast<bool>(x), 1)
 #define mcpputil_unlikely(x) __builtin_expect(static_cast<bool>(x), 0)
-#define mcpputil_always_inline __attribute__((always_inline))
-#define if_constexpr if constexpr
+#define mcpputil_always_inline __attribute__((always_inline)) inline
+#define if_constexpr                                                                                                             \
+  if                                                                                                                             \
+  constexpr
 #else
 #define MCPPALLOC_OPT_INLINE
 #define MCPPALLOC_ALWAYS_INLINE
@@ -47,7 +49,7 @@
 #define mcpputil_always_inline inline
 #endif
 // spurious error generation in nov ctp.
-//constant expr warning
+// constant expr warning
 #pragma warning(disable : 4127)
 #pragma warning(disable : 4251)
 #pragma warning(disable : 4592)

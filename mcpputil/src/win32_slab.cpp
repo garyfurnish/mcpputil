@@ -1,8 +1,8 @@
 #ifdef _WIN32
 #include <mcpputil/mcpputil/declarations.hpp>
-//This Must be first.
-#include <mcpputil/mcpputil/win32_slab.hpp>
+// This Must be first.
 #include <mcpputil/mcpputil/alignment.hpp>
+#include <mcpputil/mcpputil/win32_slab.hpp>
 #define NOMINMAX
 #include <Windows.h>
 #include <assert.h>
@@ -60,7 +60,7 @@ namespace mcpputil
       ret = ::VirtualAlloc(end(), size, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
     }
     if (ret != end()) {
-		::VirtualFree(end(), 0, MEM_RELEASE);
+      ::VirtualFree(end(), 0, MEM_RELEASE);
       return false;
     }
     m_size = size;
