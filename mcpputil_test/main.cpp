@@ -1,9 +1,28 @@
 #include <mcpputil/mcpputil/backed_ordered_map.hpp>
+#include <mcpputil/mcpputil/intrinsics.hpp>
 #include <mcpputil/mcpputil/bandit.hpp>
 #include <mcpputil/mcpputil/literals.hpp>
 using namespace bandit;
 using namespace ::mcpputil::literals;
 go_bandit([]() {
+	describe("intrinsics", []() {
+		it("popcount", []() {
+			AssertThat(::mcpputil::popcount(0_sz), Equals(0_sz));
+			AssertThat(::mcpputil::popcount(5_sz), Equals(2_sz));
+		});
+		it("ffs", []() {
+			AssertThat(::mcpputil::ffs(0_sz), Equals(0_sz));
+			AssertThat(::mcpputil::ffs(1_sz), Equals(1_sz));
+			AssertThat(::mcpputil::ffs(8_sz), Equals(4_sz));
+			AssertThat(::mcpputil::ffs(10_sz), Equals(2_sz));
+		});
+		it("clz", []() {
+			AssertThat(::mcpputil::clz(1_sz), Equals(63_sz));
+			AssertThat(::mcpputil::clz(8_sz), Equals(60_sz));
+			AssertThat(::mcpputil::clz(10_sz), Equals(60_sz));
+			AssertThat(::mcpputil::clz(::std::numeric_limits<size_t>::max()), Equals(0_sz));
+		});
+	});
   describe("backed_ordered_multimap", []() {
     using bom_t = ::mcpputil::containers::backed_ordered_multimap<size_t, size_t>;
     it("backed_ordered_multimap_test0", []() {

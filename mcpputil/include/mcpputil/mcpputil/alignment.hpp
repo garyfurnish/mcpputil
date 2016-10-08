@@ -1,3 +1,4 @@
+#include "declarations.hpp"
 #pragma once
 namespace mcpputil
 {
