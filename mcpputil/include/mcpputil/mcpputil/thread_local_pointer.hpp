@@ -68,6 +68,6 @@ namespace mcpputil
   pthread_key_t thread_local_pointer_t<Pointer_Type>::s_pkey;
 #else
   template <typename Pointer_Type>
-  thread_local Pointer_Type thread_local_pointer_t<Pointer_Type>::s_tlks;
+  thread_local typename thread_local_pointer_t<Pointer_Type>::pointer_type thread_local_pointer_t<Pointer_Type>::s_tlks;
 #endif
 }
