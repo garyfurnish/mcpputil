@@ -19,7 +19,7 @@ add_compile_options(-Wdate-time)
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 #WINDOWS VISUAL STUDIO
-add_compile_options(/W4 /sdl /WX /MP)
+add_compile_options(/W4 /sdl /WX /MP /std:c++latest)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 ELSE(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 #LINUX OR OSX
