@@ -1,7 +1,7 @@
 #pragma once
 namespace std
 {
-#if defined(__clang__) && !defined(__APPLE__)
+#if (defined(__clang__) && !defined(__APPLE__)) || defined(_WIN32)
   template <typename F, typename Tuple, size_t... I>
   MCPPALLOC_ALWAYS_INLINE auto apply_impl(F &&f, Tuple &&t, integer_sequence<size_t, I...>)
       -> decltype(::std::forward<F>(f)(::std::get<I>(::std::forward<Tuple>(t))...))

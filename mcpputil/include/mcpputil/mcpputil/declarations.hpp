@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <tuple>
+#include <intrin.h>
 #ifndef _WIN32
 #ifndef MCPPALLOC_NO_INLINES
 #define MCPPALLOC_SPARSE_INLINES
@@ -52,6 +53,8 @@
 // constant expr warning
 #pragma warning(disable : 4127)
 #pragma warning(disable : 4251)
+//truncated name warning
+#pragma warning(disable : 4503)
 #pragma warning(disable : 4592)
 #pragma warning(disable : 4100)
 #pragma warning(disable : 5030)

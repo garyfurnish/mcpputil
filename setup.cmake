@@ -1,7 +1,7 @@
 #SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3")
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 #WINDOWS VISUAL STUDIO
-add_compile_options(/W4 /sdl /WX /MP /std:c++latest)
+add_compile_options(/W4 /sdl /WX /MP /EHsc /std:c++latest)
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 ELSE(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 #LINUX OR OSX

@@ -79,14 +79,6 @@ namespace mcpputil
   }
 
   template <typename Pointer_Type>
-  constexpr auto memory_range_t<Pointer_Type>::size_comparator() noexcept
-  {
-    return [](const memory_range_t<pointer_type> &a, const memory_range_t<pointer_type> &b) noexcept->bool
-    {
-      return a.size() < b.size();
-    };
-  }
-  template <typename Pointer_Type>
   constexpr auto operator==(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
   {
     return lhs.begin() == rhs.begin() && lhs.end() == rhs.end();

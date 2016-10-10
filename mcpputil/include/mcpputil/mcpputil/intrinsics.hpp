@@ -1,8 +1,8 @@
 #pragma once
 #include "declarations.hpp"
+#ifndef _WIN32
 namespace mcpputil
 {
-#ifndef _WIN32
   mcpputil_always_inline size_t popcount(size_t x)
   {
     return static_cast<size_t>(__builtin_popcountll(x));
@@ -16,6 +16,9 @@ namespace mcpputil
     return static_cast<size_t>(__builtin_clzll(x));
   }
 #else
+#include <intrin.h>
+namespace mcpputil
+{
   mcpputil_always_inline size_t popcount(size_t x)
   {
     return __popcnt64(x);
