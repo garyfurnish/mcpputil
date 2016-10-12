@@ -36,6 +36,7 @@
   if                                                                                                                             \
   constexpr
 #else
+#include <intrin.h>
 #define MCPPALLOC_OPT_INLINE
 #define MCPPALLOC_ALWAYS_INLINE
 #define MCPPALLOC_OPT_ALWAYS_INLINE inline
@@ -52,6 +53,8 @@
 // constant expr warning
 #pragma warning(disable : 4127)
 #pragma warning(disable : 4251)
+// truncated name warning
+#pragma warning(disable : 4503)
 #pragma warning(disable : 4592)
 #pragma warning(disable : 4100)
 #pragma warning(disable : 5030)

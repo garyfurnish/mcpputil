@@ -35,7 +35,13 @@ namespace mcpputil
     template <typename New_Pointer_Type>
     constexpr auto cast() const noexcept -> memory_range_t<New_Pointer_Type>;
 
-    constexpr static auto size_comparator() noexcept;
+    constexpr static auto size_comparator() noexcept
+    {
+      return [](const memory_range_t<pointer_type> &a, const memory_range_t<pointer_type> &b) noexcept->bool
+      {
+        return a.size() < b.size();
+      };
+    }
     ::std::tuple<pointer_type, pointer_type> as_tuple() const
     {
       return *this;
