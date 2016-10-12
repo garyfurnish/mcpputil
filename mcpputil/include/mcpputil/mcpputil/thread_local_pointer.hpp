@@ -66,7 +66,7 @@ namespace mcpputil
 #ifdef __APPLE__
   template <typename Pointer_Type>
   pthread_key_t thread_local_pointer_t<Pointer_Type>::s_pkey;
-#else
+#elif defined(_WIN32)
   template <typename Pointer_Type>
   thread_local typename thread_local_pointer_t<Pointer_Type>::pointer_type thread_local_pointer_t<Pointer_Type>::s_tlks;
 #endif
