@@ -1,6 +1,10 @@
 #pragma once
 #include "declarations.hpp"
 #ifndef _WIN32
+// NOT WIN32
+#define mcpputil_builtin_prefetch(ADDR) __builtin_prefetch(ADDR)
+#define mcpputil_builtin_clz1(X) __builtin_clzl(X)
+#define mcpputil_builtin_current_stack() __builtin_frame_address(0)
 namespace mcpputil
 {
   mcpputil_always_inline size_t popcount(size_t x)
@@ -16,6 +20,11 @@ namespace mcpputil
     return static_cast<size_t>(__builtin_clzll(x));
   }
 #else
+// WIN32
+#define mcpputil_builtin_prefetch(ADDR) _m_prefetch(ADDR)
+#define mcpputil_builtin_clz1(X) (63 - __lzcnt64(X))
+#define mcpputil_builtin_current_stack() _AddressOfReturnAddress()
+
 #include <intrin.h>
 namespace mcpputil
 {

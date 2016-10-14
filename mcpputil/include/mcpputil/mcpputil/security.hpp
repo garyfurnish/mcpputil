@@ -1,6 +1,8 @@
 #pragma once
+#include <algorithm>
 #include <emmintrin.h>
 #include <random>
+#include <stdexcept>
 namespace mcpputil
 {
   namespace details
