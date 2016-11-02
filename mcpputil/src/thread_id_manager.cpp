@@ -2,14 +2,28 @@
 #include <mcpputil/mcpputil/thread_id_manager.hpp>
 namespace mcpputil
 {
+
+  template <>
+  thread_id_manager_t *singleton_t<thread_id_manager_t>::s_s{nullptr};
   thread_local thread_id_manager_t::id_type thread_id_manager_t::t_thread_id{0};
   thread_id_manager_t::thread_id_manager_t() = default;
-  void thread_id_manager_t::set_max_thread(id_type max_threads)
+  void thread_id_manager_t::set_max_tls_pointers(ptr_index sz)
   {
-    if (m_max_num_threads)
+    if (m_max_tls_pointers != 0)
+      throw ::std::runtime_error("thread_id_manager_t max tls pointers already set.");
+    if (m_max_num_threads == 0)
+      throw ::std::runtime_error("thread_id_manager_t max num threads must be set before setting max tls pointers.");
+    m_max_num_threads = sz;
+    m_ptr_array.resize(::gsl::narrow<size_t>(m_max_num_threads * m_max_tls_pointers));
+    for (auto &&obj : m_ptr_array)
+      obj = nullptr;
+  }
+  void thread_id_manager_t::set_max_threads(id_type max_threads)
+  {
+    if (m_max_num_threads != 0)
       throw ::std::runtime_error("thread_id_manager_t max threads already set");
     m_max_num_threads = max_threads;
-    m_native_handles.resize(m_max_num_threads);
+    m_native_handles.resize(::gsl::narrow<size_t>(m_max_num_threads));
   }
   auto thread_id_manager_t::add_current_thread() -> id_type
   {
@@ -35,7 +49,7 @@ namespace mcpputil
     if (it == m_native_id_map.end())
       return;
     auto id = it->second;
-    m_native_handles.at(id) = ::boost::none;
+    m_native_handles.at(::gsl::narrow<size_t>(id)) = ::boost::none;
     m_native_id_map.erase(it);
   }
   void thread_id_manager_t::remove_current_thread()
@@ -43,4 +57,4 @@ namespace mcpputil
     remove_thread(::std::this_thread::get_id());
     t_thread_id = 0;
   }
-}
+} //namespace mcpputil

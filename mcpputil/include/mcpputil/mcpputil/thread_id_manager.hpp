@@ -1,6 +1,8 @@
 #pragma once
 #include "declarations.hpp"
+#include "singleton.hpp"
 #include <boost/optional.hpp>
+#include <gsl/gsl>
 #include <mcpputil/mcpputil/boost/container/flat_map.hpp>
 #include <thread>
 #include <vector>
@@ -9,13 +11,14 @@ namespace mcpputil
   /**
    * \brief Class that establishes unique mapping between OS thread handles and low unique ids.
    **/
-  class thread_id_manager_t
+  class thread_id_manager_t : public singleton_t<thread_id_manager_t>
   {
   public:
     /**
      * \brief Id type.
      **/
-    using id_type = uint16_t;
+    using id_type = int16_t;
+    using ptr_index = int16_t;
     /**
      * \brief native handle types.
      **/
@@ -30,7 +33,21 @@ namespace mcpputil
      *
      * Can only be called once.
      **/
-    void set_max_thread(id_type max_threads);
+    void set_max_threads(id_type max_threads);
+    /**
+     * \brief Set maximum number of TLS pointers.
+     *
+     * Set max threads must be called before this.
+     **/
+    void set_max_tls_pointers(ptr_index sz);
+    /**
+     * \brief Return maximum number of threads.
+     **/
+    id_type max_threads() const noexcept;
+    /**
+     * \brief Return max number of TLS pointers.
+     **/
+    auto max_tls_pointers() const noexcept;
     /**
      * \brief Add current thread to manager and return id.
      **/
@@ -48,6 +65,16 @@ namespace mcpputil
      **/
     auto current_thread_id_noexcept() const noexcept -> ::boost::optional<id_type>;
 
+    auto get_ptr(ptr_index i) -> void *&;
+    auto get_ptr(ptr_index i) const -> void *;
+    auto get_ptr_noexcept(ptr_index i) const noexcept -> ::boost::optional<void *>;
+    auto set_ptr_noexcept(ptr_index i, void *) noexcept -> bool;
+
+    auto get_ptr(id_type id, ptr_index i) -> void *&;
+    auto get_ptr(id_type id, ptr_index i) const -> void *;
+    auto get_ptr_noexcept(id_type id, ptr_index i) const noexcept -> ::boost::optional<void *>;
+    auto set_ptr_noexcept(id_type id, ptr_index i, void *) noexcept -> bool;
+
   private:
     /**
      * \brief Add current thread to manager and return id.
@@ -58,6 +85,14 @@ namespace mcpputil
      **/
     void remove_thread(std_id_type);
     /**
+     * \brief Map of pointers for tls.
+     **/
+    ::std::vector<void *> m_ptr_array;
+    /**
+     * \brief Set maximum number of tls pointers.
+     **/
+    ptr_index m_max_tls_pointers{0};
+    /**
      * \brief Map of handles to native ids.
      **/
     ::boost::container::flat_map<std_id_type, id_type> m_native_id_map;
@@ -65,6 +100,10 @@ namespace mcpputil
      * \brief Map of ids to native handles.
      **/
     ::std::vector<::boost::optional<std_id_type>> m_native_handles;
+    /**
+     * \brief Map of which pointers are used.
+     **/
+    ::std::vector<uint8_t> m_used_ptrs;
     /**
      * \brief Max number of threads.
      **/
@@ -86,5 +125,48 @@ namespace mcpputil
     if (mcpputil_unlikely(t_thread_id == 0))
       return ::boost::none;
     return t_thread_id;
+  }
+  inline auto thread_id_manager_t::get_ptr(ptr_index i) -> void *&
+  {
+    return get_ptr(current_thread_id(), i);
+  }
+  inline auto thread_id_manager_t::get_ptr(ptr_index i) const -> void *
+  {
+    return get_ptr(current_thread_id(), i);
+  }
+  inline auto thread_id_manager_t::get_ptr_noexcept(ptr_index i) const noexcept -> ::boost::optional<void *>
+  {
+    return get_ptr_noexcept(current_thread_id(), i);
+  }
+  inline auto thread_id_manager_t::set_ptr_noexcept(ptr_index i, void *ptr) noexcept -> bool
+  {
+    return set_ptr_noexcept(current_thread_id(), i, ptr);
+  }
+  inline auto thread_id_manager_t::get_ptr(id_type id, ptr_index i) -> void *&
+  {
+    return m_ptr_array.at(::gsl::narrow<size_t>(id * m_max_tls_pointers + i));
+  }
+  inline auto thread_id_manager_t::get_ptr(id_type id, ptr_index i) const -> void *
+  {
+    return m_ptr_array.at(::gsl::narrow<size_t>(id * m_max_tls_pointers + i));
+  }
+  inline auto thread_id_manager_t::get_ptr_noexcept(id_type id, ptr_index i) const noexcept -> ::boost::optional<void *>
+  {
+    if (mcpputil_unlikely(i >= m_max_tls_pointers))
+      return ::boost::none;
+    auto index = id * m_max_tls_pointers + i;
+    if (mcpputil_unlikely(index > ::gsl::narrow_cast<ptrdiff_t>(m_ptr_array.size())))
+      return ::boost::none;
+    return m_ptr_array[::gsl::narrow<size_t>(index)];
+  }
+  inline auto thread_id_manager_t::set_ptr_noexcept(id_type id, ptr_index i, void *ptr) noexcept -> bool
+  {
+    if (mcpputil_unlikely(i >= m_max_tls_pointers))
+      return false;
+    auto index = id * m_max_tls_pointers + i;
+    if (mcpputil_unlikely(index > ::gsl::narrow_cast<ptrdiff_t>(m_ptr_array.size())))
+      return false;
+    m_ptr_array[::gsl::narrow<size_t>(index)] = ptr;
+    return true;
   }
 }
