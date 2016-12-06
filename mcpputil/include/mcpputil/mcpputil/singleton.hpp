@@ -35,8 +35,9 @@ namespace mcpputil
   template <typename T>
   singleton_t<T>::singleton_t() noexcept
   {
-    if (s_s)
+    if (s_s) {
       abort();
+    }
     s_s = static_cast<T *>(this);
   }
   template <typename T>

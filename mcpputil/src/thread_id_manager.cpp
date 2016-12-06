@@ -9,19 +9,23 @@ namespace mcpputil
   thread_id_manager_t::thread_id_manager_t() = default;
   void thread_id_manager_t::set_max_tls_pointers(ptr_index sz)
   {
-    if (m_max_tls_pointers != 0)
+    if (m_max_tls_pointers != 0) {
       throw ::std::runtime_error("thread_id_manager_t max tls pointers already set.");
-    if (m_max_num_threads == 0)
+    }
+    if (m_max_num_threads == 0) {
       throw ::std::runtime_error("thread_id_manager_t max num threads must be set before setting max tls pointers.");
+    }
     m_max_num_threads = sz;
     m_ptr_array.resize(::gsl::narrow<size_t>(m_max_num_threads * m_max_tls_pointers));
-    for (auto &&obj : m_ptr_array)
+    for (auto &&obj : m_ptr_array) {
       obj = nullptr;
+    }
   }
   void thread_id_manager_t::set_max_threads(id_type max_threads)
   {
-    if (m_max_num_threads != 0)
+    if (m_max_num_threads != 0) {
       throw ::std::runtime_error("thread_id_manager_t max threads already set");
+    }
     m_max_num_threads = max_threads;
     m_native_handles.resize(::gsl::narrow<size_t>(m_max_num_threads));
   }
@@ -33,11 +37,13 @@ namespace mcpputil
   auto thread_id_manager_t::add_thread(std_id_type sid) -> id_type
   {
     auto it = m_native_id_map.find(sid);
-    if (it != m_native_id_map.end())
+    if (it != m_native_id_map.end()) {
       return it->second;
+    }
     auto avail_id_it = ::std::find(m_native_handles.begin(), m_native_handles.end(), ::boost::none);
-    if (avail_id_it == m_native_handles.end())
+    if (avail_id_it == m_native_handles.end()) {
       throw ::std::runtime_error("thread_id_manager_t out of handles.");
+    }
     auto new_id = ::gsl::narrow<id_type>(avail_id_it - m_native_handles.begin());
     *avail_id_it = sid;
     m_native_id_map[sid] = new_id;
@@ -46,8 +52,9 @@ namespace mcpputil
   void thread_id_manager_t::remove_thread(std_id_type sid)
   {
     auto it = m_native_id_map.find(sid);
-    if (it == m_native_id_map.end())
+    if (it == m_native_id_map.end()) {
       return;
+    }
     auto id = it->second;
     m_native_handles.at(::gsl::narrow<size_t>(id)) = ::boost::none;
     m_native_id_map.erase(it);
@@ -57,4 +64,4 @@ namespace mcpputil
     remove_thread(::std::this_thread::get_id());
     t_thread_id = 0;
   }
-} //namespace mcpputil
+} // namespace mcpputil

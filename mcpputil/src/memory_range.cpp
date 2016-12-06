@@ -11,4 +11,4 @@ namespace mcpputil
     stream << "(" << reinterpret_cast<void *>(range.begin()) << "," << reinterpret_cast<void *>(range.end()) << ")";
     return stream;
   }
-} //namespace mcpputil
+} // namespace mcpputil

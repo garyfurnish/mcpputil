@@ -28,7 +28,7 @@ namespace mcpputil
     constexpr auto empty() const noexcept -> bool;
 
     constexpr auto contains(const pointer_type &ptr) const noexcept -> bool;
-    constexpr auto contains(const memory_range_t<pointer_type> &ptr) const noexcept -> bool;
+    constexpr auto contains(const memory_range_t<pointer_type> &) const noexcept -> bool;
     template <typename T>
     constexpr auto contains(T &&t) const noexcept -> bool;
 

@@ -116,14 +116,16 @@ namespace mcpputil
 
   inline auto thread_id_manager_t::current_thread_id() const -> id_type
   {
-    if (mcpputil_unlikely(t_thread_id == 0))
+    if (mcpputil_unlikely(t_thread_id == 0)) {
       throw ::std::runtime_error("thread_id_manager_t current_thread_id not set");
+    }
     return t_thread_id;
   }
   inline auto thread_id_manager_t::current_thread_id_noexcept() const noexcept -> ::boost::optional<id_type>
   {
-    if (mcpputil_unlikely(t_thread_id == 0))
+    if (mcpputil_unlikely(t_thread_id == 0)) {
       return ::boost::none;
+    }
     return t_thread_id;
   }
   inline auto thread_id_manager_t::get_ptr(ptr_index i) -> void *&
@@ -152,20 +154,24 @@ namespace mcpputil
   }
   inline auto thread_id_manager_t::get_ptr_noexcept(id_type id, ptr_index i) const noexcept -> ::boost::optional<void *>
   {
-    if (mcpputil_unlikely(i >= m_max_tls_pointers))
+    if (mcpputil_unlikely(i >= m_max_tls_pointers)) {
       return ::boost::none;
+    }
     auto index = id * m_max_tls_pointers + i;
-    if (mcpputil_unlikely(index > ::gsl::narrow_cast<ptrdiff_t>(m_ptr_array.size())))
+    if (mcpputil_unlikely(index > ::gsl::narrow_cast<ptrdiff_t>(m_ptr_array.size()))) {
       return ::boost::none;
+    }
     return m_ptr_array[::gsl::narrow<size_t>(index)];
   }
   inline auto thread_id_manager_t::set_ptr_noexcept(id_type id, ptr_index i, void *ptr) noexcept -> bool
   {
-    if (mcpputil_unlikely(i >= m_max_tls_pointers))
+    if (mcpputil_unlikely(i >= m_max_tls_pointers)) {
       return false;
+    }
     auto index = id * m_max_tls_pointers + i;
-    if (mcpputil_unlikely(index > ::gsl::narrow_cast<ptrdiff_t>(m_ptr_array.size())))
+    if (mcpputil_unlikely(index > ::gsl::narrow_cast<ptrdiff_t>(m_ptr_array.size()))) {
       return false;
+    }
     m_ptr_array[::gsl::narrow<size_t>(index)] = ptr;
     return true;
   }
