@@ -2,9 +2,46 @@
 #include <mcpputil/mcpputil/bandit.hpp>
 #include <mcpputil/mcpputil/intrinsics.hpp>
 #include <mcpputil/mcpputil/literals.hpp>
+#include <mcpputil/mcpputil/thread_id_manager.hpp>
 using namespace bandit;
 using namespace ::mcpputil::literals;
 go_bandit([]() {
+  describe("thread_id_manager", []() {
+    it("manager setup", []() {
+      auto manager = ::std::make_unique<mcpputil::thread_id_manager_t>();
+      manager->set_max_threads(100);
+      AssertThat(manager->max_threads(), Equals(100));
+      manager->set_max_tls_pointers(10);
+      AssertThat(manager->max_tls_pointers(), Equals(10));
+      manager.release();
+    });
+    it("manager test", []() {
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      mcpputil::thread_id_manager_t::gs().remove_current_thread();
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      ::std::atomic<bool> success{false};
+      auto test_thread = [&success]() {
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        mcpputil::thread_id_manager_t::gs().remove_current_thread();
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        success = true;
+      };
+      ::std::thread(test_thread).join();
+      AssertThat(static_cast<bool>(success), IsTrue());
+    });
+  });
   describe("intrinsics", []() {
     it("popcount", []() {
       AssertThat(::mcpputil::popcount(0_sz), Equals(0_sz));

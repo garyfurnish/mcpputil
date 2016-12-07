@@ -48,7 +48,7 @@ namespace mcpputil
     /**
      * \brief Return max number of TLS pointers.
      **/
-    auto max_tls_pointers() const noexcept;
+    auto max_tls_pointers() const noexcept -> ptr_index;
     /**
      * \brief Add current thread to manager and return id.
      **/
@@ -137,7 +137,7 @@ namespace mcpputil
   {
     return m_max_num_threads;
   }
-  inline auto thread_id_manager_t::max_tls_pointers() const noexcept
+  inline auto thread_id_manager_t::max_tls_pointers() const noexcept -> ptr_index
   {
     return m_max_tls_pointers;
   }
