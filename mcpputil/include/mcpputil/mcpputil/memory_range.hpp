@@ -1,6 +1,7 @@
 #pragma once
 #include "declarations.hpp"
 #include <limits>
+#include <memory>
 #include <tuple>
 #include <utility>
 namespace mcpputil

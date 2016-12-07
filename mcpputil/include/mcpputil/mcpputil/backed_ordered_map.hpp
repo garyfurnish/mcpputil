@@ -1,5 +1,6 @@
 #pragma once
 #include "declarations.hpp"
+#include <functional>
 #include <mcpputil/mcpputil/alignment.hpp>
 #include <stdexcept>
 namespace mcpputil
