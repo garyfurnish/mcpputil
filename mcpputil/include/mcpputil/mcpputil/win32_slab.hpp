@@ -1,7 +1,7 @@
 #pragma once
 #include "declarations.hpp"
 #ifdef _WIN32
-namespace cgc1
+namespace mcpputil
 {
   /**
    * \brief Slab allocator backed around virtual alloc.

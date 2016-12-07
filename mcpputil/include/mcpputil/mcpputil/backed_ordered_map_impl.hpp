@@ -100,61 +100,70 @@ namespace mcpputil
     auto backed_ordered_multimap<K, V, Less>::find(const key_type &k) -> iterator
     {
       auto lb = lower_bound(k);
-      if (!m_compare(k, lb->first))
+      if (!m_compare(k, lb->first)) {
         return lb;
+      }
       return end();
     }
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::find(const key_type &k) const -> const_iterator
     {
       auto lb = lower_bound(k);
-      if (!m_compare(k, lb->first))
+      if (!m_compare(k, lb->first)) {
         return lb;
+      }
       return end();
     }
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::operator[](const key_type &k) -> mapped_type &
     {
       auto lb = find(k);
-      if (lb != end())
+      if (lb != end()) {
         return lb->second;
+      }
       auto ii = insert(k, value_type())->second;
-      if (!ii->second)
+      if (!ii->second) {
         throw ::std::out_of_range("mcpputil: backed_ordered_multimap full: d7a2ae32-ba84-426c-a5ff-f2d7eb33f735");
+      }
       return ii->first->second;
     }
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::operator[](key_type &&k) -> mapped_type &
     {
       auto lb = find(k);
-      if (lb != end())
+      if (lb != end()) {
         return lb->second;
+      }
       auto ii = insert(k, value_type())->second;
-      if (!ii->second)
+      if (!ii->second) {
         throw ::std::out_of_range("mcpputil: backed_ordered_multimap full: f1620786-17eb-4f0d-b582-31396b9fe1c3");
+      }
       return ii->first->second;
     }
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::at(const key_type &k) -> mapped_type &
     {
       auto lb = find(k);
-      if (lb != end())
+      if (lb != end()) {
         return lb->second;
+      }
       throw ::std::out_of_range("mcpputil: key does not exist: 6a3c90e5-c060-4394-94ad-77b7ad2ee987");
     }
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::at(const key_type &k) const -> const mapped_type &
     {
       auto lb = find(k);
-      if (lb != end())
+      if (lb != end()) {
         return lb->second;
+      }
       throw ::std::out_of_range("mcpputil: key does not exist: cae44ae9-4ecb-4436-939a-c185c05b804b");
     }
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::insert(const value_type &k) -> std::pair<iterator, bool>
     {
-      if (size() == capacity())
+      if (size() == capacity()) {
         return ::std::make_pair(end(), false);
+      }
       auto ub = upper_bound(k.first);
       new (end()) value_type(k);
       ++m_size;
@@ -164,8 +173,9 @@ namespace mcpputil
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::insert(value_type &&k) -> ::std::pair<iterator, bool>
     {
-      if (size() == capacity())
+      if (size() == capacity()) {
         return ::std::make_pair(end(), false);
+      }
       auto ub = upper_bound(k.first);
       new (end()) value_type(::std::move(k));
       ++m_size;
@@ -176,11 +186,13 @@ namespace mcpputil
     auto backed_ordered_multimap<K, V, Less>::erase(const key_type &k) -> size_type
     {
       auto it = find(k);
-      if (it == end())
+      if (it == end()) {
         return 0;
+      }
       auto it_erase_end = it + 1;
-      while (it_erase_end != end() && !m_compare(k, it_erase_end->first))
+      while (it_erase_end != end() && !m_compare(k, it_erase_end->first)) {
         it_erase_end++;
+      }
       const size_t num_erased = static_cast<size_t>(it_erase_end - it);
       erase(it, it_erase_end);
       return num_erased;
@@ -188,8 +200,9 @@ namespace mcpputil
     template <typename K, typename V, typename Less>
     auto backed_ordered_multimap<K, V, Less>::erase(const_iterator cit) -> iterator
     {
-      if (cit >= end())
+      if (cit >= end()) {
         return 0;
+      }
       const auto it = begin() + (cit - begin());
       ::std::rotate(it, it + 1, end());
       (end() - 1)->~value_type();
@@ -197,16 +210,18 @@ namespace mcpputil
       return it;
     }
     template <typename K, typename V, typename Less>
-    auto backed_ordered_multimap<K, V, Less>::erase(const_iterator cit_erase_begin, const_iterator cit_erase_end) -> iterator
+    auto backed_ordered_multimap<K, V, Less>::erase(const_iterator begin_iterator, const_iterator end_iterator) -> iterator
     {
-      const auto it_erase_begin = begin() + (cit_erase_begin - begin());
-      const auto it_erase_end = begin() + (cit_erase_end - begin());
+      const auto it_erase_begin = begin() + (begin_iterator - begin());
+      const auto it_erase_end = begin() + (end_iterator - begin());
       const size_t num_erased = static_cast<size_t>(it_erase_end - it_erase_begin);
-      if (!num_erased)
+      if (0 == num_erased) {
         return it_erase_end;
+      }
       ::std::rotate(it_erase_begin, it_erase_end, end());
-      for (size_t i = 0; i < num_erased; ++i)
+      for (size_t i = 0; i < num_erased; ++i) {
         (end() - 1 - i)->~value_type();
+      }
       m_size -= num_erased;
       return it_erase_end;
     }
@@ -250,21 +265,22 @@ namespace mcpputil
     {
       auto insert_it = upper_bound(v.first);
       auto remove_it = begin() + (orig - cbegin());
-      if (remove_it == end())
+      if (remove_it == end()) {
         return insert(::std::move(v));
+      }
       if (remove_it < insert_it) {
         ::std::rotate(remove_it, remove_it + 1, insert_it);
         *(insert_it - 1) = ::std::move(v);
         return ::std::make_pair(insert_it, true);
-      } else if (remove_it > insert_it) {
+      }
+      if (remove_it > insert_it) {
         ::std::rotate(insert_it, remove_it, remove_it + 1);
         *insert_it = ::std::move(v);
         return ::std::make_pair(insert_it, true);
-      } else {
-        // equal
-        *remove_it = ::std::move(v);
-        return ::std::make_pair(remove_it, true);
       }
+      // equal
+      *remove_it = ::std::move(v);
+      return ::std::make_pair(remove_it, true);
     }
   }
 }

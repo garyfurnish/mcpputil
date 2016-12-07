@@ -1,6 +1,9 @@
 #pragma once
+#include <algorithm>
 #include <emmintrin.h>
+#include <gsl/gsl>
 #include <random>
+#include <stdexcept>
 namespace mcpputil
 {
   namespace details
@@ -126,10 +129,11 @@ namespace mcpputil
       *ptr++ = static_cast<uint32_t>(mt());
     }
   }
-  inline bool is_unique_seeded_random(void *v, size_t sz)
+  inline bool is_unique_seeded_random(void *v, ptrdiff_t sz)
   {
-    if (sz % sizeof(uint32_t))
+    if (sz % ::gsl::narrow<ptrdiff_t>(sizeof(uint32_t))) {
       throw ::std::runtime_error("Put unique seeded random size must be divisible by  sizeof(uint32_t)");
+    }
     sz /= sizeof(uint32_t);
     std::mt19937 mt;
     auto ptr = reinterpret_cast<uint32_t *>(v);

@@ -1,9 +1,65 @@
 #include <mcpputil/mcpputil/backed_ordered_map.hpp>
 #include <mcpputil/mcpputil/bandit.hpp>
+#include <mcpputil/mcpputil/intrinsics.hpp>
 #include <mcpputil/mcpputil/literals.hpp>
+#include <mcpputil/mcpputil/thread_id_manager.hpp>
 using namespace bandit;
 using namespace ::mcpputil::literals;
 go_bandit([]() {
+  describe("thread_id_manager", []() {
+    it("manager setup", []() {
+      auto manager = ::std::make_unique<mcpputil::thread_id_manager_t>();
+      manager->set_max_threads(100);
+      AssertThat(manager->max_threads(), Equals(100));
+      manager->set_max_tls_pointers(10);
+      AssertThat(manager->max_tls_pointers(), Equals(10));
+      manager.release();
+    });
+    it("manager test", []() {
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      mcpputil::thread_id_manager_t::gs().remove_current_thread();
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      ::std::atomic<bool> success{false};
+      auto test_thread = [&success]() {
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        mcpputil::thread_id_manager_t::gs().remove_current_thread();
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+          return;
+        }
+        success = true;
+      };
+      ::std::thread(test_thread).join();
+      AssertThat(static_cast<bool>(success), IsTrue());
+    });
+  });
+  describe("intrinsics", []() {
+    it("popcount", []() {
+      AssertThat(::mcpputil::popcount(0_sz), Equals(0_sz));
+      AssertThat(::mcpputil::popcount(5_sz), Equals(2_sz));
+    });
+    it("ffs", []() {
+      AssertThat(::mcpputil::ffs(0_sz), Equals(0_sz));
+      AssertThat(::mcpputil::ffs(1_sz), Equals(1_sz));
+      AssertThat(::mcpputil::ffs(8_sz), Equals(4_sz));
+      AssertThat(::mcpputil::ffs(10_sz), Equals(2_sz));
+    });
+    it("clz", []() {
+      AssertThat(::mcpputil::clz(1_sz), Equals(63_sz));
+      AssertThat(::mcpputil::clz(8_sz), Equals(60_sz));
+      AssertThat(::mcpputil::clz(10_sz), Equals(60_sz));
+      AssertThat(::mcpputil::clz(::std::numeric_limits<size_t>::max()), Equals(0_sz));
+    });
+  });
   describe("backed_ordered_multimap", []() {
     using bom_t = ::mcpputil::containers::backed_ordered_multimap<size_t, size_t>;
     it("backed_ordered_multimap_test0", []() {

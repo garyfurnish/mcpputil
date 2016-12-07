@@ -1,5 +1,6 @@
 #pragma once
 #include "declarations.hpp"
+#include <functional>
 #include <mcpputil/mcpputil/alignment.hpp>
 #include <stdexcept>
 namespace mcpputil
@@ -117,7 +118,7 @@ namespace mcpputil
        * @return An iterator pointing to the element immediately following q prior to the element being erased. If no such element
        *exists, returns end().
       **/
-      auto erase(const_iterator it) -> iterator;
+      auto erase(const_iterator) -> iterator;
       /**
        * \brief Erases all the elements in the range [first, last).
        *
@@ -125,7 +126,7 @@ namespace mcpputil
        *Complexity: Logarithmic search time plus erasure time linear to the elements with bigger keys.
        * @return Returns last.
        **/
-      auto erase(const_iterator begin, const_iterator end) -> iterator;
+      auto erase(const_iterator begin_iterator, const_iterator end_iterator) -> iterator;
       /**
        * \brief erase(a.begin(),a.end()).
        *

@@ -2,7 +2,7 @@
 #pragma once
 #include "win32_slab.hpp"
 #ifdef _WIN32
-namespace cgc1
+namespace mcpputil
 {
   inline slab_t::slab_t(size_t size, void *addr)
   {

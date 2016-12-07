@@ -71,7 +71,7 @@ namespace mcpputil
     {
       return *this;
     }
-    aligned_allocator_t<T, alignment> &operator=(const aligned_allocator_t<T, Alignment> &) noexcept = default;
+    aligned_allocator_t<T, Alignment> &operator=(const aligned_allocator_t<T, Alignment> &) noexcept = default;
     aligned_allocator_t &operator=(aligned_allocator_t<T, Alignment> &&) noexcept = default;
     /**
      * \brief Operator==

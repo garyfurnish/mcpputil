@@ -3,6 +3,11 @@
 namespace mcpputil
 {
   template <typename Pointer_Type>
+  memory_range_t<Pointer_Type>::memory_range_t() noexcept(::std::is_nothrow_move_constructible<pointer_type>::value)
+      : ::std::tuple<pointer_type, pointer_type>(nullptr, nullptr)
+  {
+  }
+  template <typename Pointer_Type>
   void
   memory_range_t<Pointer_Type>::set_begin(pointer_type begin) noexcept(::std::is_nothrow_move_assignable<pointer_type>::value)
   {
@@ -28,65 +33,63 @@ namespace mcpputil
     ::std::get<1>(*this) = ::std::move(pair.second);
   }
   template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::begin() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value)
+  constexpr auto memory_range_t<Pointer_Type>::begin() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value)
       -> pointer_type
   {
     return ::std::get<0>(*this);
   }
   template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::end() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value)
+  constexpr auto memory_range_t<Pointer_Type>::end() const noexcept(::std::is_nothrow_copy_constructible<pointer_type>::value)
       -> pointer_type
   {
     return ::std::get<1>(*this);
   }
   template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::size() const noexcept -> size_type
+  constexpr auto memory_range_t<Pointer_Type>::size() const noexcept -> size_type
   {
     return static_cast<size_type>(end() - begin());
   }
   template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::empty() const noexcept -> bool
+  constexpr auto memory_range_t<Pointer_Type>::empty() const noexcept -> bool
   {
     return size() == 0;
   }
   template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::contains(const pointer_type &ptr) const noexcept -> bool
+  constexpr auto memory_range_t<Pointer_Type>::contains(const pointer_type &ptr) const noexcept -> bool
   {
     return ptr >= begin() && ptr < end();
   }
   template <typename Pointer_Type>
   template <typename New_Pointer_Type>
-  auto memory_range_t<Pointer_Type>::cast() const noexcept -> memory_range_t<New_Pointer_Type>
+  constexpr auto memory_range_t<Pointer_Type>::cast() const noexcept -> memory_range_t<New_Pointer_Type>
   {
     return memory_range_t<New_Pointer_Type>(unsafe_cast<New_Pointer_Type>(begin()), unsafe_cast<New_Pointer_Type>(end()));
   }
 
   template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::contains(const memory_range_t<pointer_type> &range) const noexcept -> bool
+  constexpr auto memory_range_t<Pointer_Type>::contains(const memory_range_t<pointer_type> &range) const noexcept -> bool
   {
     return begin() <= range.begin() && range.end() <= end();
   }
+  template <typename Pointer_Type>
+  template <typename T>
+  constexpr auto memory_range_t<Pointer_Type>::contains(T &&t) const noexcept -> bool
+  {
+    return contains(static_cast<const pointer_type &>(reinterpret_cast<pointer_type>(t)));
+  }
 
   template <typename Pointer_Type>
-  auto memory_range_t<Pointer_Type>::size_comparator() noexcept
-  {
-    return [](const memory_range_t<pointer_type> &a, const memory_range_t<pointer_type> &b) noexcept->bool
-    {
-      return a.size() < b.size();
-    };
-  }
-  template <typename Pointer_Type>
-  auto operator==(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
+  constexpr auto operator==(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
   {
     return lhs.begin() == rhs.begin() && lhs.end() == rhs.end();
   }
   template <typename Pointer_Type>
-  auto operator!=(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
+  constexpr auto operator!=(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
   {
     return lhs.begin() != rhs.begin() || lhs.end != rhs.end();
   }
   template <typename Pointer_Type>
-  auto operator<(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
+  constexpr auto operator<(const memory_range_t<Pointer_Type> &lhs, const memory_range_t<Pointer_Type> &rhs) noexcept -> bool
   {
     return lhs.begin() < rhs.begin();
   }
@@ -96,7 +99,7 @@ namespace mcpputil
     return operator<<(stream, range.template cast<void *>());
   }
   template <typename Pointer_Type>
-  auto size(const memory_range_t<Pointer_Type> &range)
+  constexpr auto size(const memory_range_t<Pointer_Type> &range)
   {
     return range.size();
   }
