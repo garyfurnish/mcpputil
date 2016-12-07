@@ -5,7 +5,8 @@ namespace mcpputil
 
   template <>
   thread_id_manager_t *singleton_t<thread_id_manager_t>::s_s{nullptr};
-  thread_local thread_id_manager_t::id_type thread_id_manager_t::t_thread_id{0};
+  thread_local thread_id_manager_t::id_type thread_id_manager_t::t_thread_id{
+      ::std::numeric_limits<thread_id_manager_t::id_type>::max()};
   thread_id_manager_t::thread_id_manager_t() = default;
   void thread_id_manager_t::set_max_tls_pointers(ptr_index sz)
   {

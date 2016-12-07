@@ -116,18 +116,27 @@ namespace mcpputil
 
   inline auto thread_id_manager_t::current_thread_id() const -> id_type
   {
-    if (mcpputil_unlikely(t_thread_id == 0)) {
+    if (mcpputil_unlikely(t_thread_id == ::std::numeric_limits<id_type>::max())) {
       throw ::std::runtime_error("thread_id_manager_t current_thread_id not set");
     }
     return t_thread_id;
   }
   inline auto thread_id_manager_t::current_thread_id_noexcept() const noexcept -> ::boost::optional<id_type>
   {
-    if (mcpputil_unlikely(t_thread_id == 0)) {
+    if (mcpputil_unlikely(t_thread_id == ::std::numeric_limits<id_type>::max())) {
       return ::boost::none;
     }
     return t_thread_id;
   }
+  inline thread_id_manager_t::id_type thread_id_manager_t::max_threads() const noexcept
+  {
+    return m_max_num_threads;
+  }
+  inline auto thread_id_manager_t::max_tls_pointers() const noexcept
+  {
+    return m_max_tls_pointers;
+  }
+
   inline auto thread_id_manager_t::get_ptr(ptr_index i) -> void *&
   {
     return get_ptr(current_thread_id(), i);
