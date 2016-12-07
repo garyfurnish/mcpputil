@@ -1,4 +1,5 @@
 #pragma once
+#include "concurrency.hpp"
 #include "declarations.hpp"
 #include "singleton.hpp"
 #include <boost/optional.hpp>
@@ -33,13 +34,13 @@ namespace mcpputil
      *
      * Can only be called once.
      **/
-    void set_max_threads(id_type max_threads);
+    void set_max_threads(id_type max_threads) REQUIRES(!m_mutex);
     /**
      * \brief Set maximum number of TLS pointers.
      *
      * Set max threads must be called before this.
      **/
-    void set_max_tls_pointers(ptr_index sz);
+    void set_max_tls_pointers(ptr_index sz) REQUIRES(!m_mutex);
     /**
      * \brief Return maximum number of threads.
      **/
@@ -51,11 +52,11 @@ namespace mcpputil
     /**
      * \brief Add current thread to manager and return id.
      **/
-    auto add_current_thread() -> id_type;
+    id_type add_current_thread() REQUIRES(!m_mutex);
     /**
      * \brief Remove current thread.
      **/
-    void remove_current_thread();
+    void remove_current_thread() REQUIRES(!m_mutex);
     /**
      * \brief Return current thread id.
      **/
@@ -79,15 +80,19 @@ namespace mcpputil
     /**
      * \brief Add current thread to manager and return id.
      **/
-    auto add_thread(std_id_type) -> id_type;
+    id_type add_thread(std_id_type) REQUIRES(!m_mutex);
     /**
      * \brief Remove thread by native handle.
      **/
-    void remove_thread(std_id_type);
+    void remove_thread(std_id_type) REQUIRES(!m_mutex);
     /**
      * \brief Map of pointers for tls.
      **/
     ::std::vector<void *> m_ptr_array;
+    /**
+     * \brief Lock for thread id manager.
+     **/
+    mcpputil::mutex_t m_mutex;
     /**
      * \brief Set maximum number of tls pointers.
      **/

@@ -10,6 +10,7 @@ namespace mcpputil
   thread_id_manager_t::thread_id_manager_t() = default;
   void thread_id_manager_t::set_max_tls_pointers(ptr_index sz)
   {
+    MCPPALLOC_CONCURRENCY_LOCK_GUARD(m_mutex);
     if (m_max_tls_pointers != 0) {
       throw ::std::runtime_error("thread_id_manager_t max tls pointers already set.");
     }
@@ -24,6 +25,7 @@ namespace mcpputil
   }
   void thread_id_manager_t::set_max_threads(id_type max_threads)
   {
+    MCPPALLOC_CONCURRENCY_LOCK_GUARD(m_mutex);
     if (m_max_num_threads != 0) {
       throw ::std::runtime_error("thread_id_manager_t max threads already set");
     }
@@ -37,6 +39,7 @@ namespace mcpputil
   }
   auto thread_id_manager_t::add_thread(std_id_type sid) -> id_type
   {
+    MCPPALLOC_CONCURRENCY_LOCK_GUARD(m_mutex);
     auto it = m_native_id_map.find(sid);
     if (it != m_native_id_map.end()) {
       return it->second;
@@ -52,6 +55,7 @@ namespace mcpputil
   }
   void thread_id_manager_t::remove_thread(std_id_type sid)
   {
+    MCPPALLOC_CONCURRENCY_LOCK_GUARD(m_mutex);
     auto it = m_native_id_map.find(sid);
     if (it == m_native_id_map.end()) {
       return;
