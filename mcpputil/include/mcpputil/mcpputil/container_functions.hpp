@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 namespace mcpputil
 {
   template <typename Begin, typename End, typename Val, typename Comparator>
