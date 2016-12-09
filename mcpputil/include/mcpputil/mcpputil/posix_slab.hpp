@@ -1,6 +1,7 @@
 #pragma once
 #include "declarations.hpp"
 #include <mcpputil/mcpputil/boost/property_tree/ptree.hpp>
+#include <mcpputil/mcpputil/memory_range.hpp>
 #ifdef MCPPALLOC_POSIX
 namespace mcpputil
 {
@@ -22,6 +23,10 @@ namespace mcpputil
     using const_iterator = const uint8_t *;
     using difference_type = ::std::ptrdiff_t;
     using size_type = size_t;
+    /**
+     * \brief Type of memory range.
+     **/
+    using memory_range_type = mcpputil::memory_range_t<pointer>;
 
     slab_t() = default;
     slab_t(slab_t &) = delete;
@@ -93,6 +98,10 @@ namespace mcpputil
      * \brief Return end address of memory slab.
     **/
     uint8_t *end() const noexcept;
+    /**
+     * \brief Return memory range of memory slab.
+     **/
+    auto memory_range() const noexcept -> memory_range_type;
 
   private:
     /**
@@ -109,6 +118,10 @@ namespace mcpputil
      **/
     bool m_valid = false;
   };
+  inline auto slab_t::memory_range() const noexcept -> memory_range_type
+  {
+    return memory_range_type{begin(), end()};
+  }
 }
 #include "posix_slab_impl.hpp"
 #endif

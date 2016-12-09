@@ -38,11 +38,14 @@ list (APPEND SRC_FILES
   src/memory_range.cpp
   src/thread_id_manager.cpp)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-list (APPEND SRC_FILES ${SRC_FILES}
+  list (APPEND SRC_FILES ${SRC_FILES}
   include/mcpputil/mcpputil/win32_slab.hpp
   include/mcpputil/mcpputil/win32_slab_impl.hpp
   src/win32_slab.cpp)
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+ELSE()
+  list (APPEND SRC_FILES ${SRC_FILES}
+  src/posix_slab.cpp)
+ENDIF()
 add_library(mcpputil ${SRC_FILES})
 INSTALL(DIRECTORY "include/mcpputil" DESTINATION "include")
 INSTALL(TARGETS mcpputil
