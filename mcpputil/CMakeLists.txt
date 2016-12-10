@@ -37,7 +37,9 @@ list (APPEND SRC_FILES
   include/mcpputil/mcpputil/warning_wrapper_push.hpp
   src/container_functions.cpp
   src/memory_range.cpp
-  src/thread_id_manager.cpp)
+  src/pointer_utils.cpp
+  src/thread_id_manager.cpp
+  src/vector_utils)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   list (APPEND SRC_FILES ${SRC_FILES}
   include/mcpputil/mcpputil/win32_slab.hpp
