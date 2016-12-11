@@ -35,7 +35,7 @@ list (APPEND SRC_FILES
   include/mcpputil/mcpputil/view_traits.hpp
   include/mcpputil/mcpputil/warning_wrapper_pop.hpp
   include/mcpputil/mcpputil/warning_wrapper_push.hpp
-  src/allocator.hpp
+  src/allocator.cpp
   src/container_functions.cpp
   src/memory_range.cpp
   src/pointer_utils.cpp
