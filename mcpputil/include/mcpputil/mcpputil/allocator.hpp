@@ -30,8 +30,8 @@ namespace mcpputil
   {
     assert(count >= 0);
     for (auto it = first; it != last; ++it) {
-      ::std::allocator_traits<Allocator>::construct(allocator, it - count, ::std::move(*it));
-      ::std::allocator_traits<Allocator>::destroy(allocator, it);
+      ::std::allocator_traits<Allocator>::construct(allocator, it, ::std::move(*(it + count)));
+      ::std::allocator_traits<Allocator>::destroy(allocator, (it + count));
     }
   }
 

@@ -40,7 +40,7 @@ namespace mcpputil
 
     template <typename Allocator>
     void assign(index_type count, const T &value, Allocator &allocator);
-    template <class InputIt, typename Allocator>
+    template <class InputIt, typename Allocator, typename = typename ::std::iterator_traits<InputIt>::iterator_category>
     void assign(InputIt first, InputIt last, Allocator &allocator);
     template <typename Allocator>
     void assign(std::initializer_list<T> ilist, Allocator &allocator);
@@ -151,7 +151,7 @@ namespace mcpputil
   vector_extrensic_allocator_t<T>::vector_extrensic_allocator_t(std::initializer_list<T> init, Allocator &allocator)
       : vector_extrensic_allocator_t()
   {
-    assign(init.begin(), init.end(), allocator);
+    assign(init, allocator);
   }
   template <typename T>
   template <typename Allocator>
@@ -176,12 +176,12 @@ namespace mcpputil
   void vector_extrensic_allocator_t<T>::assign(index_type count, const T &value, Allocator &allocator)
   {
     clear(allocator);
-    resize(count);
+    reserve(count, allocator);
     m_size = count;
     ::std::uninitialized_fill_n(m_data, count, value);
   }
   template <typename T>
-  template <class InputIt, typename Allocator>
+  template <class InputIt, typename Allocator, typename>
   void vector_extrensic_allocator_t<T>::assign(InputIt first, InputIt last, Allocator &allocator)
   {
     clear(allocator);
@@ -434,9 +434,10 @@ namespace mcpputil
   auto vector_extrensic_allocator_t<T>::erase(const_iterator pos, Allocator &allocator) -> iterator
   {
     ::std::allocator_traits<Allocator>::destroy(allocator, pos);
-    uninitialied_shift_by_n_neg(pos, end(), 1, allocator);
+    uninitialized_shift_by_n_neg(pos, end(), 1, allocator);
     m_size--;
-    return pos;
+    auto offset = pos - begin();
+    return begin() + offset;
   }
   template <typename T>
   template <typename Allocator>
@@ -444,7 +445,7 @@ namespace mcpputil
   {
     auto count = last - first;
     mcpputil::destroy(first, last, allocator);
-    uninitialized_shift_by_n_neg(first, end(), 1, allocator);
+    uninitialized_shift_by_n_neg(first, end(), count, allocator);
     m_size -= count;
     return begin() + (first - begin());
   }
