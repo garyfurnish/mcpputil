@@ -35,11 +35,13 @@ list (APPEND SRC_FILES
   include/mcpputil/mcpputil/view_traits.hpp
   include/mcpputil/mcpputil/warning_wrapper_pop.hpp
   include/mcpputil/mcpputil/warning_wrapper_push.hpp
+  src/allocator.hpp
   src/container_functions.cpp
   src/memory_range.cpp
   src/pointer_utils.cpp
   src/thread_id_manager.cpp
-  src/vector_utils)
+  src/vector_utils.cpp
+  src/vector_extrensic_allocator.cpp)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   list (APPEND SRC_FILES ${SRC_FILES}
   include/mcpputil/mcpputil/win32_slab.hpp
