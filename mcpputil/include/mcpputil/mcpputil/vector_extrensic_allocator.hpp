@@ -338,17 +338,31 @@ namespace mcpputil
   template <typename Allocator>
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, const T &value, Allocator &allocator) -> iterator
   {
+    auto index = pos - begin();
+    reserve(size() + 1);
+    auto new_pos = begin() + index;
+    uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
+    ::std::allocator_traits<Allocator>::construct(new_pos, value);
   }
   template <typename T>
   template <typename Allocator>
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, T &&value, Allocator &allocator) -> iterator
   {
+    auto index = pos - begin();
+    reserve(size() + 1);
+    auto new_pos = begin() + index;
+    uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
+    ::std::allocator_traits<Allocator>::construct(new_pos, value);
   }
   template <typename T>
   template <typename Allocator>
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, index_type count, const T &value, Allocator &allocator)
       -> iterator
   {
+    auto index = pos - begin();
+    reserve(size() + 1);
+    auto new_pos = begin() + index;
+    uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
   }
   template <typename T>
   template <class InputIt, typename Allocator>
