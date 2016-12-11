@@ -90,4 +90,25 @@ namespace mcpputil
   {
     return make_functional_iterator(t, iterator_next_advancer_t{});
   }
+  template <typename Template>
+  struct iterator_template_next_advancer_t {
+    template <typename T>
+    auto operator()(T &&t) const noexcept
+    {
+      return ::std::forward<T>(t)->template next<Template>();
+    }
+  };
+  /**
+   * \brief Iterator that works by obtaining the next element.
+   **/
+  template <typename T, typename Template>
+  using template_next_iterator = functional_iterator_t<T, iterator_template_next_advancer_t<Template>>;
+  /**
+   * \brief Function to make template_next iterators that uses type deduction to avoid end user templates.
+  **/
+  template <typename Template, typename T>
+  auto make_template_next_iterator(T *t) noexcept
+  {
+    return make_functional_iterator(t, iterator_template_next_advancer_t<Template>{});
+  }
 }
