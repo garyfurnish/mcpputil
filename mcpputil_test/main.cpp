@@ -3,6 +3,7 @@
 #include <mcpputil/mcpputil/intrinsics.hpp>
 #include <mcpputil/mcpputil/literals.hpp>
 #include <mcpputil/mcpputil/thread_id_manager.hpp>
+void test_vector_extrensic_allocator();
 using namespace bandit;
 using namespace ::mcpputil::literals;
 go_bandit([]() {
@@ -151,6 +152,7 @@ go_bandit([]() {
     });
 
   });
+  test_vector_extrensic_allocator();
 });
 
 int main(int argc, char *argv[])
