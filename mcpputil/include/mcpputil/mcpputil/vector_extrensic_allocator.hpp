@@ -89,7 +89,7 @@ namespace mcpputil
     iterator insert(const_iterator pos, T &&value, Allocator &allocator);
     template <typename Allocator>
     iterator insert(const_iterator pos, index_type count, const T &value, Allocator &allocator);
-    template <class InputIt, typename Allocator>
+    template <class InputIt, typename Allocator, typename = typename ::std::iterator_traits<InputIt>::iterator_category>
     iterator insert(const_iterator pos, InputIt first, InputIt last, Allocator &allocator);
     template <typename Allocator>
     iterator insert(const_iterator pos, std::initializer_list<T> ilist, Allocator &allocator);
@@ -378,10 +378,10 @@ namespace mcpputil
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, const T &value, Allocator &allocator) -> iterator
   {
     auto index = pos - begin();
-    reserve_expand(size() + 1);
+    reserve_expand(size() + 1, allocator);
     auto new_pos = begin() + index;
     uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
-    ::std::allocator_traits<Allocator>::construct(new_pos, value);
+    ::std::allocator_traits<Allocator>::construct(allocator, new_pos, value);
     m_size++;
     return new_pos;
   }
@@ -390,10 +390,10 @@ namespace mcpputil
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, T &&value, Allocator &allocator) -> iterator
   {
     auto index = pos - begin();
-    reserve_expand(size() + 1);
+    reserve_expand(size() + 1, allocator);
     auto new_pos = begin() + index;
     uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
-    ::std::allocator_traits<Allocator>::construct(new_pos, value);
+    ::std::allocator_traits<Allocator>::construct(allocator, new_pos, value);
     m_size++;
     return new_pos;
   }
@@ -403,22 +403,23 @@ namespace mcpputil
       -> iterator
   {
     auto index = pos - begin();
-    reserve_expand(size() + count);
+    reserve_expand(size() + count, allocator);
     auto new_pos = begin() + index;
-    uninitialied_shift_by_n_pos(new_pos, end(), count, allocator);
-    ::std::uninitialized_fill(new_pos, new_pos + count, value);
+    uninitialied_shift_by_n_pos(new_pos, end() + count - 1, count, allocator);
+    uninitialized_fill_n(new_pos, count, value, allocator);
     m_size += count;
     return new_pos;
   }
   template <typename T>
-  template <class InputIt, typename Allocator>
+  template <class InputIt, typename Allocator, typename>
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, InputIt first, InputIt last, Allocator &allocator) -> iterator
   {
     auto index = pos - begin();
     auto count = last - first;
-    reserve_expand(size() + count);
+    reserve_expand(size() + count, allocator);
     auto new_pos = begin() + index;
-    ::std::uninitialized_copy_n(first, last - first, new_pos);
+    uninitialied_shift_by_n_pos(new_pos, end() + count - 1, count, allocator);
+    uninitialized_copy_n(first, last - first, new_pos, allocator);
     m_size += last - first;
     return new_pos;
   }

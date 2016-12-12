@@ -21,8 +21,8 @@ namespace mcpputil
   {
     assert(count >= 0);
     for (auto it = last; it != first; --it) {
-      ::std::allocator_traits<Allocator>::construct(allocator, it + count, ::std::move(*it));
-      ::std::allocator_traits<Allocator>::destroy(allocator, it);
+      ::std::allocator_traits<Allocator>::construct(allocator, it, ::std::move(*(it - count)));
+      ::std::allocator_traits<Allocator>::destroy(allocator, (it - count));
     }
   }
   template <typename InputIt1, typename InputIt2, typename Allocator>
@@ -50,5 +50,38 @@ namespace mcpputil
       }
       throw;
     }
+  }
+  template <class ForwardIt, class Size, class T, typename Allocator>
+  ForwardIt uninitialized_fill_n(ForwardIt first, Size count, const T &value, Allocator &allocator)
+  {
+    ForwardIt current = first;
+    try {
+      for (; count > 0; ++current, (void)--count) {
+        ::std::allocator_traits<Allocator>::construct(allocator, ::std::addressof(*current), value);
+      }
+      return current;
+    } catch (...) {
+      for (; first != current; ++first) {
+        ::std::allocator_traits<Allocator>::destroy(allocator, first);
+      }
+      throw;
+    }
+  }
+
+  template <class InputIt, class Size, class ForwardIt, typename Allocator>
+  ForwardIt uninitialized_copy_n(InputIt first, Size count, ForwardIt d_first, Allocator allocator)
+  {
+    ForwardIt current = d_first;
+    try {
+      for (; count > 0; ++first, (void)++current, --count) {
+        ::std::allocator_traits<Allocator>::construct(allocator, ::std::addressof(*current), *first);
+      }
+    } catch (...) {
+      for (; d_first != current; ++d_first) {
+        ::std::allocator_traits<Allocator>::destroy(allocator, first);
+      }
+      throw;
+    }
+    return current;
   }
 }
