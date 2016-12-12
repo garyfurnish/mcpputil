@@ -24,6 +24,8 @@ namespace mcpputil
     using reverse_iterator = ::std::reverse_iterator<iterator>;
     using const_reverse_iterator = ::std::reverse_iterator<const_iterator>;
 
+    static constexpr const difference_type cs_expansion_factor = 2;
+
     vector_extrensic_allocator_t();
     template <typename Allocator>
     explicit vector_extrensic_allocator_t(index_type count, Allocator &allocator);
@@ -73,6 +75,8 @@ namespace mcpputil
     index_type max_size() const;
     template <typename Allocator>
     void reserve(index_type new_cap, Allocator &allocator);
+    template <typename Allocator>
+    void reserve_expand(index_type new_cap, Allocator &allocator);
     index_type capacity() const;
     template <typename Allocator>
     void shrink_to_fit(Allocator &allocator);
@@ -101,7 +105,8 @@ namespace mcpputil
     void push_back(T &&value, Allocator &allocator);
     template <typename Allocator, class... Args>
     reference emplace_back(Allocator &allocator, Args &&... args);
-    void pop_back();
+    template <typename Allocator>
+    void pop_back(Allocator &allocator);
     template <typename Allocator>
     void resize(index_type count, Allocator &allocator);
     template <typename Allocator>
@@ -176,7 +181,7 @@ namespace mcpputil
   void vector_extrensic_allocator_t<T>::assign(index_type count, const T &value, Allocator &allocator)
   {
     clear(allocator);
-    reserve(count, allocator);
+    reserve_expand(count, allocator);
     m_size = count;
     ::std::uninitialized_fill_n(m_data, count, value);
   }
@@ -339,6 +344,13 @@ namespace mcpputil
     m_data = new_pointer;
   }
   template <typename T>
+  template <typename Allocator>
+  void vector_extrensic_allocator_t<T>::reserve_expand(index_type new_cap, Allocator &allocator)
+  {
+    reserve(::std::max(new_cap, capacity() * cs_expansion_factor), allocator);
+  }
+
+  template <typename T>
   auto vector_extrensic_allocator_t<T>::capacity() const -> index_type
   {
     return m_capacity;
@@ -366,7 +378,7 @@ namespace mcpputil
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, const T &value, Allocator &allocator) -> iterator
   {
     auto index = pos - begin();
-    reserve(size() + 1);
+    reserve_expand(size() + 1);
     auto new_pos = begin() + index;
     uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
     ::std::allocator_traits<Allocator>::construct(new_pos, value);
@@ -378,7 +390,7 @@ namespace mcpputil
   auto vector_extrensic_allocator_t<T>::insert(const_iterator pos, T &&value, Allocator &allocator) -> iterator
   {
     auto index = pos - begin();
-    reserve(size() + 1);
+    reserve_expand(size() + 1);
     auto new_pos = begin() + index;
     uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
     ::std::allocator_traits<Allocator>::construct(new_pos, value);
@@ -391,7 +403,7 @@ namespace mcpputil
       -> iterator
   {
     auto index = pos - begin();
-    reserve(size() + count);
+    reserve_expand(size() + count);
     auto new_pos = begin() + index;
     uninitialied_shift_by_n_pos(new_pos, end(), count, allocator);
     ::std::uninitialized_fill(new_pos, new_pos + count, value);
@@ -404,7 +416,7 @@ namespace mcpputil
   {
     auto index = pos - begin();
     auto count = last - first;
-    reserve(size() + count);
+    reserve_expand(size() + count);
     auto new_pos = begin() + index;
     ::std::uninitialized_copy_n(first, last - first, new_pos);
     m_size += last - first;
@@ -422,7 +434,7 @@ namespace mcpputil
   auto vector_extrensic_allocator_t<T>::emplace(const_iterator pos, Allocator &allocator, Args &&... args) -> iterator
   {
     auto index = pos - begin();
-    reserve(size() + 1, allocator);
+    reserve_expand(size() + 1, allocator);
     auto new_pos = begin() + index;
     uninitialied_shift_by_n_pos(new_pos, end(), 1, allocator);
     ::std::allocator_traits<Allocator>::construct(allocator, new_pos, ::std::forward<Args...>(args...));
@@ -459,17 +471,21 @@ namespace mcpputil
   template <typename Allocator>
   void vector_extrensic_allocator_t<T>::push_back(T &&value, Allocator &allocator)
   {
-    emplace(end(), ::std::move(allocator), value);
+    emplace(end(), allocator, ::std::move(value));
   }
   template <typename T>
   template <typename Allocator, class... Args>
   auto vector_extrensic_allocator_t<T>::emplace_back(Allocator &allocator, Args &&... args) -> reference
   {
+    auto old_end = end();
     emplace(end(), allocator, ::std::forward<Args...>(args...));
+    return *old_end;
   }
   template <typename T>
-  void vector_extrensic_allocator_t<T>::pop_back()
+  template <typename Allocator>
+  void vector_extrensic_allocator_t<T>::pop_back(Allocator &allocator)
   {
+    ::std::allocator_traits<Allocator>::destroy(allocator, end() - 1);
     --m_size;
   }
   template <typename T>
@@ -482,7 +498,7 @@ namespace mcpputil
       erase(end() - count, end(), allocator);
     } else {
       // grow
-      reserve(count, allocator);
+      reserve_expand(count, allocator);
       uninitialized_default_construct_n(end(), count, allocator);
       m_size += count;
     }
@@ -497,7 +513,7 @@ namespace mcpputil
       erase(end() - count, end());
     } else {
       // grow
-      reserve(count);
+      reserve_expand(count);
       ::std::uninitialized_fill_n(end(), count, value);
       m_size += count;
     }

@@ -114,5 +114,47 @@ void test_vector_extrensic_allocator()
       AssertThat(::std::equal(v.begin(), v.end(), a.begin()), IsTrue());
       v.destroy(alloc);
     });
+    it("push_back 80915e7f-4b5a-4138-a048-cc059c78289d8", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      v.push_back(6, alloc);
+      ::std::array<int, 6> b{{1, 2, 3, 4, 5, 6}};
+      AssertThat(v.size(), Equals(6));
+      AssertThat(::std::equal(v.begin(), v.end(), b.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+    it("push_back 650b51b0-378d-449b-ab1a-416a834945a1", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      int i = 6;
+      v.push_back(::std::move(i), alloc);
+      ::std::array<int, 6> b{{1, 2, 3, 4, 5, 6}};
+      AssertThat(v.size(), Equals(6));
+      AssertThat(::std::equal(v.begin(), v.end(), b.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+    it("emplace_back e3484eec-2865-4a14-9ab2-cc0ad9fa6c80", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      v.emplace_back(alloc, 6);
+      ::std::array<int, 6> b{{1, 2, 3, 4, 5, 6}};
+      AssertThat(v.size(), Equals(6));
+      AssertThat(::std::equal(v.begin(), v.end(), b.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+    it("pop_back f6602976-5bc9-496c-899d-9741d05624f6", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      v.pop_back(alloc);
+      ::std::array<int, 4> b{{1, 2, 3, 4}};
+      AssertThat(v.size(), Equals(4));
+      AssertThat(::std::equal(v.begin(), v.end(), b.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+
   });
 }
