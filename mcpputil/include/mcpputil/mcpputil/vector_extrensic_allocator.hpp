@@ -494,14 +494,17 @@ namespace mcpputil
   void vector_extrensic_allocator_t<T>::resize(index_type count, Allocator &allocator)
   {
     auto num = count - size();
+    if (num == 0) {
+      return;
+    }
     if (num < 0) {
       // shrink
-      erase(end() - count, end(), allocator);
+      erase(end() + num, end(), allocator);
     } else {
       // grow
       reserve_expand(count, allocator);
       uninitialized_default_construct_n(end(), count, allocator);
-      m_size += count;
+      m_size = count;
     }
   }
   template <typename T>
@@ -509,14 +512,18 @@ namespace mcpputil
   void vector_extrensic_allocator_t<T>::resize(index_type count, const value_type &value, Allocator &allocator)
   {
     auto num = count - size();
+    if (num == 0) {
+      return;
+    }
+
     if (num < 0) {
       // shrink
-      erase(end() - count, end());
+      erase(end() + num, end(), allocator);
     } else {
       // grow
-      reserve_expand(count);
-      ::std::uninitialized_fill_n(end(), count, value);
-      m_size += count;
+      reserve_expand(count, allocator);
+      uninitialized_fill_n(end(), count, value, allocator);
+      m_size = count;
     }
   }
   template <typename T>

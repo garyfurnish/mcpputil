@@ -213,6 +213,56 @@ void test_vector_extrensic_allocator()
       AssertThat(::std::equal(v.begin(), v.end(), b.begin()), IsTrue());
       v.destroy(alloc);
     });
-
+    it("resize c750f134-7e80-41df-a2f5-2e171e649555", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      v.resize(8, alloc);
+      AssertThat(v.size(), Equals(8));
+      AssertThat(::std::equal(v.begin(), v.begin() + 5, a.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+    it("resize 3fc3801c-524f-4337-9dd1-9dcea74d6ff0", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      v.resize(3, alloc);
+      AssertThat(v.size(), Equals(3));
+      AssertThat(::std::equal(v.begin(), v.begin() + 3, a.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+    it("resize a44ff812-8abf-4796-94c6-058e35daa577", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      ::std::array<int, 8> b{{1, 2, 3, 4, 5, 9, 9, 9}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      v.resize(8, 9, alloc);
+      AssertThat(v.size(), Equals(8));
+      AssertThat(::std::equal(v.begin(), v.begin() + 5, b.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+    it("resize a44ff812-8abf-4796-94c6-058e35daa577", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      v.resize(3, 9, alloc);
+      AssertThat(v.size(), Equals(3));
+      AssertThat(::std::equal(v.begin(), v.begin() + 3, a.begin()), IsTrue());
+      v.destroy(alloc);
+    });
+    it("swap 96ae0bd4-3f2b-45a0-b404-8f8d2aa6a913", []() {
+      auto alloc = ::std::allocator<int>();
+      ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
+      ::std::array<int, 8> b{{1, 2, 3, 4, 5, 9, 9, 9}};
+      auto v = vector_extrensic_allocator_t<int>(a.begin(), a.end(), alloc);
+      auto v2 = vector_extrensic_allocator_t<int>(b.begin(), b.end(), alloc);
+      v.swap(v2);
+      AssertThat(v.size(), Equals(8));
+      AssertThat(v2.size(), Equals(5));
+      AssertThat(::std::equal(v.begin(), v.end(), b.begin()), IsTrue());
+      AssertThat(::std::equal(v2.begin(), v2.end(), a.begin()), IsTrue());
+      v.destroy(alloc);
+      v2.destroy(alloc);
+    });
   });
 }
