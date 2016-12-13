@@ -92,6 +92,252 @@ void test_flat_set_extrensic_allocator()
       AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
       set.destroy(alloc);
     });
+    it("insert da003908-0e0d-4c6c-9493-2fdee9480b8e", []() {
+      // std::pair<iterator, bool> insert(const value_type &value, Allocator &allocator);
+      // test adding to empty set
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set;
+      int i = 3;
+      set.insert(i, alloc);
+      ::std::array<int, 1> array{{i}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("insert 21412e06-df25-4eee-8a26-e7b333ec9a16", []() {
+      // std::pair<iterator, bool> insert(const value_type &value, Allocator &allocator);
+      // test to make sure can't add duplicates.
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      int i = 3;
+      auto ret = set.insert(i, alloc);
+      AssertThat(ret.second, IsFalse());
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+
+    it("insert 8628718a-c4dd-463c-a38a-55798e509fac", []() {
+      // std::pair<iterator, bool> insert(value_type &&value, Allocator &allocator);
+      // test adding to empty set
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set;
+      set.insert(3, alloc);
+      ::std::array<int, 1> array{{3}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("insert 8628718a-c4dd-463c-a38a-55798e509fac", []() {
+      // std::pair<iterator, bool> insert(value_type &&value, Allocator &allocator);
+      // test to make sure can't add duplicates.
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      auto ret = set.insert(3, alloc);
+      AssertThat(ret.second, IsFalse());
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("insert df30b3ac-1ae9-4244-a3c4-4536f78cf7bf", []() {
+      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      // test invalid hint
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      int i = 4;
+      set.insert(set.begin() + 2, i, alloc);
+      AssertThat(set.size(), Equals(4));
+      ::std::array<int, 4> array{{3, 4, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+
+    it("insert df30b3ac-1ae9-4244-a3c4-4536f78cf7bf", []() {
+      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      // test valid hint
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("insert df30b3ac-1ae9-4244-a3c4-4536f78cf7bf", []() {
+      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      // test adding to empty set
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+
+    it("insert df30b3ac-1ae9-4244-a3c4-4536f78cf7bf", []() {
+      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      // test to make sure can't add duplicates
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+
+    it("insert 3c4c937f-f16d-490f-94b0-0e1cab63359a", []() {
+      //    iterator insert(const_iterator hint, value_type &&value, Allocator &allocator);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("insert 8093d8fb-c70d-401a-9d1c-c761cce75b59", []() {
+      //    void insert(InputIt first, InputIt last, Allocator &allocator);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("insert 4bef14f0-4c22-444f-9000-e957a8da3896", []() {
+      //    void insert(std::initializer_list<value_type> ilist, Allocator &allocator);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("inset_sorted_contiguous 95428789-67b9-4477-a155-e99a48db9d3f", []() {
+      //    void insert_sorted_contiguous(InputIt first, InputIt last, Allocator &allocator);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("erase 72f4d92f-cdad-421e-92c9-4c8219896a85", []() {
+      //    size_t erase(const key_type &key, Allocator &allocator);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+
+    it("find 5e983de9-c2f0-4adb-b97e-6737c5968682", []() {
+      //    const_iterator find(const key_type &key) const;
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("find 0a8f6baa-ef3d-4d8b-bb6a-cc65934f55ff", []() {
+      //    iterator find(const FK &x);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("find 9f306801-6e6b-419e-895b-b07dc48d1a55", []() {
+      //    const_iterator find(const FK &x) const;
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("lower_bound 7e34cc2c-f859-486d-b102-332b736d30f7", []() {
+      //    iterator lower_bound(const key_type &key);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("lower_bound 7e5403ef-6bec-44ab-9914-374cf95d97ed", []() {
+      //    const_iterator lower_bound(const key_type &key) const;
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("lower_bound 834bafb8-f287-4630-b51e-3f5dd1dd83da", []() {
+      //    iterator lower_bound(const FK &x);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("lower_bound 78ed0aeb-872a-4d1f-a045-32ecdcb163bf", []() {
+      //    const_iterator lower_bound(const FK &x) const;
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("upper_bound 9b11c5a6-6d7a-4899-8488-d6366cacc822", []() {
+      //    const_iterator lower_bound(const FK &x) const;
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("upper_bound 04600d0b-aa17-4890-800f-13a42d6a135f", []() {
+      //    iterator upper_bound(const key_type &key);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("upper_bound f3bf8d59-bdd1-4d43-ab9e-53214f4eb3a0", []() {
+      //    const_iterator upper_bound(const key_type &key) const;
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("upper_bound 6825b9b9-62ea-4306-be15-edd96ca20244", []() {
+      //    iterator upper_bound(const FK &x);
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
+    it("upper_bound 769a5c52-4d00-4105-b272-0e055fd534ae", []() {
+      //    const_iterator upper_bound(const FK &x) const;
+      ::std::allocator<int> alloc;
+      flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
+      AssertThat(set.size(), Equals(3));
+      ::std::array<int, 3> array{{3, 5, 7}};
+      AssertThat(::std::equal(set.begin(), set.end(), array.begin()), IsTrue());
+      set.destroy(alloc);
+    });
 
   });
 }

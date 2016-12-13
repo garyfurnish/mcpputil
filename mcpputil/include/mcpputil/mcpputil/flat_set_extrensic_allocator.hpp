@@ -47,15 +47,15 @@ namespace mcpputil
     template <typename Allocator>
     std::pair<iterator, bool> insert(value_type &&value, Allocator &allocator);
     template <typename Allocator>
-    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+    std::pair<iterator, bool> insert(const_iterator hint, const value_type &value, Allocator &allocator);
     template <typename Allocator>
     iterator insert(const_iterator hint, value_type &&value, Allocator &allocator);
     template <typename InputIt, typename Allocator>
     void insert(InputIt first, InputIt last, Allocator &allocator);
-    template <typename InputIt, typename Allocator>
-    void insert_sorted_contiguous(InputIt first, InputIt last, Allocator &allocator);
     template <typename Allocator>
     void insert(std::initializer_list<value_type> ilist, Allocator &allocator);
+    template <typename InputIt, typename Allocator>
+    void insert_sorted_contiguous(InputIt first, InputIt last, Allocator &allocator);
     template <typename Allocator>
     size_t erase(const key_type &key, Allocator &allocator);
     iterator find(const key_type &key);
@@ -126,12 +126,13 @@ namespace mcpputil
   auto flat_set_extrensic_allocator_t<Key, Compare>::insert(const value_type &value, Allocator &allocator)
       -> ::std::pair<iterator, bool>
   {
-    auto it = end();
-    if (!empty()) {
-      it = lower_bound(value);
-      if (it != end() && !m_compare(value, *it))
-        return ::std::make_pair(end(), false);
+    if (empty()) {
+      this->push_back(value, allocator);
+      return ::std::make_pair(begin(), false);
     }
+    auto it = lower_bound(value);
+    if (it != end() && !m_compare(value, *it))
+      return ::std::make_pair(end(), false);
     vector_extrensic_allocator_t<key_type>::insert(it, value, allocator);
     return ::std::make_pair(it, true);
   }
@@ -140,25 +141,26 @@ namespace mcpputil
   auto flat_set_extrensic_allocator_t<Key, Compare>::insert(value_type &&value, Allocator &allocator)
       -> ::std::pair<iterator, bool>
   {
-    auto it = end();
-    if (!empty()) {
-      it = lower_bound(value);
-      if (it != end() && !m_compare(value, *it))
-        return ::std::make_pair(end(), false);
+    if (empty()) {
+      this->emplace_back(allocator, value);
+      return ::std::make_pair(begin(), false);
     }
-    vector_extrensic_allocator_t<key_type>::insert(::std::move(value), value, allocator);
+    auto it = lower_bound(value);
+    if (it != end() && !m_compare(value, *it))
+      return ::std::make_pair(end(), false);
+    vector_extrensic_allocator_t<key_type>::emplace(it, allocator, value);
     return ::std::make_pair(it, true);
   }
   template <class Key, typename Compare>
   template <typename Allocator>
   auto flat_set_extrensic_allocator_t<Key, Compare>::insert(const_iterator hint, const value_type &value, Allocator &allocator)
-      -> iterator
+      -> std::pair<iterator, bool>
   {
     auto it = end();
     if (!empty()) {
-      it = ::std::lower_bound(hint, end(), value);
+      it = ::std::lower_bound(const_cast<iterator>(hint), end(), value) - 1;
       if (it == end()) {
-        it = lower_bound(value);
+        it = lower_bound(value) - 1;
       }
       if (it != end() && !m_compare(value, *it))
         return ::std::make_pair(end(), false);
@@ -173,7 +175,7 @@ namespace mcpputil
   {
     auto it = end();
     if (!empty()) {
-      it = ::std::lower_bound(hint, end(), value);
+      it = ::std::lower_bound(const_cast<iterator>(hint), end(), value);
       if (it == end()) {
         it = lower_bound(value);
       }
