@@ -47,9 +47,9 @@ namespace mcpputil
     template <typename Allocator>
     std::pair<iterator, bool> insert(value_type &&value, Allocator &allocator);
     template <typename Allocator>
-    std::pair<iterator, bool> insert(const_iterator hint, const value_type &value, Allocator &allocator);
+    std::pair<iterator, bool> insert_search(const_iterator hint, const value_type &value, Allocator &allocator);
     template <typename Allocator>
-    iterator insert(const_iterator hint, value_type &&value, Allocator &allocator);
+    iterator insert_search(const_iterator hint, value_type &&value, Allocator &allocator);
     template <typename InputIt, typename Allocator>
     void insert(InputIt first, InputIt last, Allocator &allocator);
     template <typename Allocator>
@@ -153,15 +153,13 @@ namespace mcpputil
   }
   template <class Key, typename Compare>
   template <typename Allocator>
-  auto flat_set_extrensic_allocator_t<Key, Compare>::insert(const_iterator hint, const value_type &value, Allocator &allocator)
-      -> std::pair<iterator, bool>
+  auto flat_set_extrensic_allocator_t<Key, Compare>::insert_search(const_iterator hint,
+                                                                   const value_type &value,
+                                                                   Allocator &allocator) -> std::pair<iterator, bool>
   {
     auto it = end();
     if (!empty()) {
-      it = ::std::lower_bound(const_cast<iterator>(hint), end(), value) - 1;
-      if (it == end()) {
-        it = lower_bound(value) - 1;
-      }
+      it = ::std::lower_bound(const_cast<iterator>(hint), end(), value);
       if (it != end() && !m_compare(value, *it))
         return ::std::make_pair(end(), false);
     }
@@ -170,7 +168,7 @@ namespace mcpputil
   }
   template <class Key, typename Compare>
   template <typename Allocator>
-  auto flat_set_extrensic_allocator_t<Key, Compare>::insert(const_iterator hint, value_type &&value, Allocator &allocator)
+  auto flat_set_extrensic_allocator_t<Key, Compare>::insert_search(const_iterator hint, value_type &&value, Allocator &allocator)
       -> iterator
   {
     auto it = end();
