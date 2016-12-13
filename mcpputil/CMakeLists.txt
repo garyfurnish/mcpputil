@@ -18,6 +18,7 @@ list (APPEND SRC_FILES
   include/mcpputil/mcpputil/container_functions.hpp
   include/mcpputil/mcpputil/declarations.hpp
   include/mcpputil/mcpputil/equipartition.hpp
+  include/mcpputil/mcpputil/flat_map_extrensic_allocator.hpp
   include/mcpputil/mcpputil/function_iterator.hpp
   include/mcpputil/mcpputil/intrinsics.hpp
   include/mcpputil/mcpputil/iterator.hpp
@@ -37,6 +38,7 @@ list (APPEND SRC_FILES
   include/mcpputil/mcpputil/warning_wrapper_push.hpp
   src/allocator.cpp
   src/container_functions.cpp
+  src/flat_map_extrensic_allocator.cpp
   src/memory_range.cpp
   src/pointer_utils.cpp
   src/thread_id_manager.cpp
