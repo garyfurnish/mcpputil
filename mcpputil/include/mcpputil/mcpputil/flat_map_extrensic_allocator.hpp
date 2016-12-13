@@ -28,7 +28,6 @@ namespace mcpputil
     using vector_extrensic_allocator_t<value_type>::erase;
     using vector_extrensic_allocator_t<value_type>::size;
     using vector_extrensic_allocator_t<value_type>::empty;
-    using vector_extrensic_allocator_t<::std::pair<K, V>>::vector;
 
     flat_map_extrensic_allocator_t();
     explicit flat_map_extrensic_allocator_t(const compare_type &comp);

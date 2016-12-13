@@ -39,6 +39,7 @@ list (APPEND SRC_FILES
   src/allocator.cpp
   src/container_functions.cpp
   src/flat_map_extrensic_allocator.cpp
+  src/flat_set_extrensic_allocator.cpp
   src/memory_range.cpp
   src/pointer_utils.cpp
   src/thread_id_manager.cpp
