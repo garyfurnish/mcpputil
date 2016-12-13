@@ -25,28 +25,22 @@ namespace mcpputil
     using vector_extrensic_allocator_t<value_type>::cend;
     using vector_extrensic_allocator_t<value_type>::erase;
     using vector_extrensic_allocator_t<value_type>::size;
+    using vector_extrensic_allocator_t<value_type>::capacity;
     using vector_extrensic_allocator_t<value_type>::empty;
     using vector_extrensic_allocator_t<value_type>::destroy;
 
     flat_set_extrensic_allocator_t();
     explicit flat_set_extrensic_allocator_t(const Compare &comp);
-    template <typename InputIt, typename Allocator>
-    flat_set_extrensic_allocator_t(InputIt first,
-                                   InputIt last,
-                                   const Allocator &alloc,
-                                   const compare_type &comp = compare_type{});
-    template <typename InputIt, typename Allocator>
-    flat_set_extrensic_allocator_t(InputIt first, InputIt last, const Allocator &alloc);
+    template <typename InputIt, typename Allocator, typename = typename ::std::iterator_traits<InputIt>::iterator_category>
+    flat_set_extrensic_allocator_t(InputIt first, InputIt last, Allocator &alloc, const compare_type &comp = compare_type{});
     template <typename Allocator>
-    flat_set_extrensic_allocator_t(const flat_set_extrensic_allocator_t &other, const Allocator &alloc);
+    flat_set_extrensic_allocator_t(const flat_set_extrensic_allocator_t &other, Allocator &alloc);
     template <typename Allocator>
     flat_set_extrensic_allocator_t(flat_set_extrensic_allocator_t &&other);
     template <typename Allocator>
     flat_set_extrensic_allocator_t(std::initializer_list<value_type> init,
-                                   const Allocator &alloc,
+                                   Allocator &alloc,
                                    const compare_type &comp = compare_type{});
-    template <typename Allocator>
-    flat_set_extrensic_allocator_t(std::initializer_list<value_type> init, const Allocator &alloc);
 
     template <typename Allocator>
     std::pair<iterator, bool> insert(const value_type &value, Allocator &allocator);
@@ -95,27 +89,19 @@ namespace mcpputil
   {
   }
   template <class Key, typename Compare>
-  template <typename InputIt, typename Allocator>
+  template <typename InputIt, typename Allocator, typename>
   flat_set_extrensic_allocator_t<Key, Compare>::flat_set_extrensic_allocator_t(InputIt first,
                                                                                InputIt last,
-                                                                               const Allocator &alloc,
+                                                                               Allocator &alloc,
                                                                                const compare_type &comp)
       : m_compare(comp)
   {
     insert(first, last, alloc);
   }
   template <class Key, typename Compare>
-  template <typename InputIt, typename Allocator>
-  flat_set_extrensic_allocator_t<Key, Compare>::flat_set_extrensic_allocator_t(InputIt first,
-                                                                               InputIt last,
-                                                                               const Allocator &alloc)
-  {
-    insert(first, last, alloc);
-  }
-  template <class Key, typename Compare>
   template <typename Allocator>
   flat_set_extrensic_allocator_t<Key, Compare>::flat_set_extrensic_allocator_t(const flat_set_extrensic_allocator_t &other,
-                                                                               const Allocator &alloc)
+                                                                               Allocator &alloc)
       : vector_extrensic_allocator_t<value_type>(other, alloc), m_compare(other.m_compare)
   {
   }
@@ -128,16 +114,9 @@ namespace mcpputil
   template <class Key, typename Compare>
   template <typename Allocator>
   flat_set_extrensic_allocator_t<Key, Compare>::flat_set_extrensic_allocator_t(std::initializer_list<value_type> init,
-                                                                               const Allocator &alloc,
+                                                                               Allocator &alloc,
                                                                                const compare_type &comp)
       : m_compare(comp)
-  {
-    insert(init, alloc);
-  }
-  template <class Key, typename Compare>
-  template <typename Allocator>
-  flat_set_extrensic_allocator_t<Key, Compare>::flat_set_extrensic_allocator_t(std::initializer_list<value_type> init,
-                                                                               const Allocator &alloc)
   {
     insert(init, alloc);
   }
@@ -209,7 +188,7 @@ namespace mcpputil
   void flat_set_extrensic_allocator_t<Key, Compare>::insert(InputIt first, InputIt last, Allocator &allocator)
   {
     for (auto it = first; it != last; ++it) {
-      insert(*it);
+      insert(*it, allocator);
     }
   }
   template <class Key, typename Compare>
@@ -220,7 +199,7 @@ namespace mcpputil
       return ::std::make_pair(end(), false);
     auto it = end();
     if (!empty()) {
-      it = lower_bound(*first);
+      it = lower_bound(first);
       if (it != end() && !m_compare(*first, *it))
         return ::std::make_pair(end(), false);
     }
