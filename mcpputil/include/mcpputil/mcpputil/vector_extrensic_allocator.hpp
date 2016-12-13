@@ -173,7 +173,10 @@ namespace mcpputil
   template <typename T>
   vector_extrensic_allocator_t<T>::~vector_extrensic_allocator_t()
   {
-    assert(!m_data);
+    if (m_data) {
+      ::std::cerr << "Vector extrensic data not destroyed\n";
+    }
+    //    assert(!m_data);
   }
 
   template <typename T>
