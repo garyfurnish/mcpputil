@@ -5,8 +5,9 @@ namespace mcpputil
   template <typename Begin, typename End, typename Val, typename Comparator>
   auto last_greater_equal_than(Begin &&begin, End &&end, Val &&val, Comparator &&comparator)
   {
-    if (begin == end)
+    if (begin == end) {
       return end;
+    }
     const auto ub = ::std::upper_bound(begin, ::std::forward<End>(end), val, comparator);
     const auto plb = ub - 1;
     if (ub == begin || comparator(*plb, val)) {
@@ -46,8 +47,9 @@ namespace mcpputil
     auto lb = ::std::lower_bound(c.begin(), c.end(), val, comp);
     auto origlb = lb;
     while (lb != c.end() && comp(*lb, val)) {
-      if (*lb == val)
+      if (*lb == val) {
         return false;
+      }
       lb++;
     }
     // insert before lb.

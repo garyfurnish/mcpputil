@@ -27,8 +27,9 @@ namespace mcpputil
       }
       volatile char *p = reinterpret_cast<volatile char *>(p_sz);
 
-      while (n--)
+      while (n--) {
         *p++ = 0;
+      }
     }
   }
   inline void secure_zero_stream(void *s, size_t n)
@@ -63,8 +64,9 @@ namespace mcpputil
       n -= sizeof(size_t) * 4;
     }
 #endif
-    if (p_sz)
+    if (p_sz) {
       details::secure_zero_no_vector(p_sz, n);
+    }
   }
   /**
    * \brief Securely zero a pointer, guarenteed to not be optimized out.
@@ -119,8 +121,9 @@ namespace mcpputil
 
   inline void put_unique_seeded_random(void *v, size_t sz)
   {
-    if (sz % sizeof(uint32_t))
+    if (sz % sizeof(uint32_t)) {
       throw ::std::runtime_error("Put unique seeded random size must be divisible by  sizeof(uint32_t)");
+    }
     sz /= sizeof(uint32_t);
     std::mt19937 mt;
     auto ptr = reinterpret_cast<uint32_t *>(v);
@@ -139,15 +142,17 @@ namespace mcpputil
     auto ptr = reinterpret_cast<uint32_t *>(v);
     const auto end = ptr + sz;
     while (ptr != end) {
-      if (*ptr++ != static_cast<uint32_t>(mt()))
+      if (*ptr++ != static_cast<uint32_t>(mt())) {
         return false;
+      }
     }
     return true;
   }
   inline size_t is_unique_seeded_random_failure_loc(void *v, size_t sz)
   {
-    if (sz % sizeof(uint32_t))
+    if (sz % sizeof(uint32_t)) {
       throw ::std::runtime_error("Put unique seeded random size must be divisible by  sizeof(uint32_t)");
+    }
     sz /= sizeof(uint32_t);
     std::mt19937 mt;
     auto ptr = reinterpret_cast<uint32_t *>(v);

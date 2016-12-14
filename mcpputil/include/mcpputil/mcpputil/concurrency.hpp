@@ -297,8 +297,9 @@ namespace mcpputil
      **/
     void lock() ACQUIRE()
     {
-      while (!try_lock())
+      while (!try_lock()) {
         __asm__ volatile("pause");
+      }
     }
 #endif
     /**
@@ -364,10 +365,11 @@ namespace mcpputil
      **/
     void lock()
     {
-      if (m_lock1 && m_lock2)
+      if (m_lock1 && m_lock2) {
         ::std::lock(*m_lock1, *m_lock2);
-      else
+      } else {
         ::std::terminate();
+      }
     }
     /**
      * \brief Unlock locks.
@@ -400,10 +402,11 @@ namespace mcpputil
     bool try_lock() NO_THREAD_SAFETY_ANALYSIS
     {
       if (m_lock1->try_lock()) {
-        if (m_lock2->try_lock())
+        if (m_lock2->try_lock()) {
           return true;
-        else
+        } else {
           m_lock1->unlock();
+        }
       }
       return false;
     }

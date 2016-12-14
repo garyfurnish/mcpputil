@@ -20,13 +20,15 @@ namespace mcpputil
 
   inline slab_t::slab_t(size_t size, void *addr)
   {
-    if (!allocate(size, addr))
+    if (!allocate(size, addr)) {
       ::std::terminate();
+    }
   }
   inline slab_t::slab_t(size_t size)
   {
-    if (!allocate(size))
+    if (!allocate(size)) {
       ::std::terminate();
+    }
   }
   inline slab_t::~slab_t()
   {
@@ -47,14 +49,16 @@ namespace mcpputil
   inline bool slab_t::allocate(size_t size, void *addr)
   {
     // sanity check size.
-    if (size == 0)
+    if (size == 0) {
       return false;
+    }
     void *ret = nullptr;
     // attempt to map the memory.
-    if (addr)
+    if (addr) {
       ret = ::mmap(addr, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | c_map_anonymous | c_map_no_reserve | MAP_FIXED, -1, 0);
-    else
+    } else {
       ret = ::mmap(addr, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | c_map_anonymous | c_map_no_reserve, -1, 0);
+    }
     // check of failure.
     if (!ret || ret == reinterpret_cast<void *>(-1)) {
       ::std::cerr << "\n Failed to allocate memory " << addr << " " << size << ::std::endl;
@@ -74,11 +78,13 @@ namespace mcpputil
   inline bool slab_t::expand(size_t size)
   {
     // sanity check size.
-    if (size == 0)
+    if (size == 0) {
       return true;
+    }
     // make sure memory has already been allocated.
-    if (!m_addr)
+    if (!m_addr) {
       return false;
+    }
     // try to expand the memory.
     // this can fail for lots of reasons, such as ASLR.
     void *ret = ::mremap(m_addr, m_size, size, 0);
@@ -94,8 +100,9 @@ namespace mcpputil
     if (m_addr) {
       // if memory exists, unmap it.
       int ret = ::munmap(m_addr, m_size);
-      if (ret)
+      if (ret) {
         assert(0);
+      }
     }
     m_valid = false;
     m_addr = nullptr;
@@ -112,8 +119,9 @@ namespace mcpputil
     if (addr) {
       // if it succeeded, immediately unmap it.
       int ret = ::munmap(addr, size);
-      if (ret)
+      if (ret) {
         assert(0);
+      }
       // address is known to be a good hole for a slab as long as nothing else is mmaped.
       return addr;
     }
