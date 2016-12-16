@@ -206,15 +206,17 @@ namespace mcpputil
   template <typename T>
   auto vector_extrensic_allocator_t<T>::at(index_type pos) -> reference
   {
-    if (pos >= size())
+    if (pos >= size()) {
       throw ::std::out_of_range("");
+    }
     return m_data[pos];
   }
   template <typename T>
   auto vector_extrensic_allocator_t<T>::at(index_type pos) const -> const_reference
   {
-    if (pos >= size())
+    if (pos >= size()) {
       throw ::std::out_of_range("");
+    }
     return m_data[pos];
   }
   template <typename T>

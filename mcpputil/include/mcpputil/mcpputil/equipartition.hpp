@@ -17,16 +17,18 @@ namespace mcpputil
   template <typename PartitionContainer, typename OverContainer, typename F>
   void equipartition(PartitionContainer &&pc, OverContainer &&oc, F &&f)
   {
-    if (oc.empty() || pc.empty())
+    if (oc.empty() || pc.empty()) {
       return;
+    }
     using over_container_type = typename ::std::decay_t<OverContainer>;
     const auto num_over = ::gsl::narrow<typename view_traits_t<over_container_type>::difference_type>(oc.size());
     const auto num_partition =
         ::gsl::narrow<typename view_traits_t<::std::decay_t<PartitionContainer>>::difference_type>(pc.size());
     const auto data_per_partition = num_partition / num_over;
-    for (::std::remove_cv_t<decltype(num_over)> i = 0; i < num_over - 1; ++i)
+    for (::std::remove_cv_t<decltype(num_over)> i = 0; i < num_over - 1; ++i) {
       f(oc[static_cast<typename view_traits_t<over_container_type>::index_type>(i)],
         ::std::make_tuple(pc.begin() + data_per_partition * i, pc.begin() + data_per_partition * (i + 1)));
+    }
     f(oc.back(), ::std::make_tuple(pc.begin() + data_per_partition * (num_over - 1), pc.end()));
   }
 }
