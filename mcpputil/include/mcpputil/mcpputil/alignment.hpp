@@ -1,7 +1,4 @@
 #include "declarations.hpp"
-#include <gsl/gsl>
-#include <stdexcept>
-
 #pragma once
 namespace mcpputil
 {
@@ -33,33 +30,23 @@ namespace mcpputil
   /**
    * \brief Align size to alignment.
    **/
-  inline constexpr ptrdiff_t align(ptrdiff_t sz, ptrdiff_t alignment) noexcept
+  inline constexpr size_t align(size_t sz, size_t alignment) noexcept
   {
-    if (sz <= 0) {
-      throw ::std::runtime_error("Align error");
-    }
-    if (alignment <= 0) {
-      throw ::std::runtime_error("Align error");
-    }
-    auto ret = ((sz + alignment - 1) / alignment) * alignment;
-    if (mcpputil_unlikely(ret < 0)) {
-      throw ::std::runtime_error("Align error");
-    }
-    return ret;
+    return ((sz + alignment - 1) / alignment) * alignment;
   }
   /**
    * \brief Align pointer to alignment.
   **/
   inline void *align(void *iptr, size_t alignment) noexcept
   {
-    return reinterpret_cast<void *>(align(reinterpret_cast<ptrdiff_t>(iptr), gsl::narrow_cast<ptrdiff_t>(alignment)));
+    return reinterpret_cast<void *>(align(reinterpret_cast<size_t>(iptr), alignment));
   }
   /**
    * \brief Align pointer to alignment.
   **/
   inline const void *align(const void *iptr, size_t alignment) noexcept
   {
-    return reinterpret_cast<void *>(align(reinterpret_cast<ptrdiff_t>(iptr), gsl::narrow_cast<ptrdiff_t>(alignment)));
+    return reinterpret_cast<void *>(align(reinterpret_cast<size_t>(iptr), alignment));
   }
 
   /**
