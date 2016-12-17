@@ -483,9 +483,7 @@ namespace mcpputil
   template <typename Allocator, class... Args>
   auto vector_extrensic_allocator_t<T>::emplace_back(Allocator &allocator, Args &&... args) -> reference
   {
-    auto old_end = end();
-    emplace(end(), allocator, ::std::forward<Args...>(args...));
-    return *old_end;
+    return *emplace(end(), allocator, ::std::forward<Args...>(args...));
   }
   template <typename T>
   template <typename Allocator>

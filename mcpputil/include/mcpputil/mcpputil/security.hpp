@@ -13,10 +13,10 @@ namespace mcpputil
      *
      * This has no alignment restrictions.
      **/
-    inline void secure_zero_no_vector(volatile void *s, size_t n)
+    inline void secure_zero_no_vector(volatile void *s, ptrdiff_t n)
     {
       volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(s);
-      while (n >= sizeof(size_t)) {
+      while (n >= ::gsl::narrow_cast<ptrdiff_t>(sizeof(size_t))) {
 #ifdef __SSE__
         _mm_stream_pi(reinterpret_cast<__m64 *>(const_cast<size_t *>(p_sz)), __m64{0});
         p_sz++;
@@ -65,7 +65,7 @@ namespace mcpputil
     }
 #endif
     if (p_sz != nullptr) {
-      details::secure_zero_no_vector(p_sz, n);
+      details::secure_zero_no_vector(p_sz, ::gsl::narrow_cast<ptrdiff_t>(n));
     }
   }
   /**
@@ -109,7 +109,7 @@ namespace mcpputil
       n -= sizeof(size_t) * 4;
     }
 #endif
-    details::secure_zero_no_vector(p_sz, n);
+    details::secure_zero_no_vector(p_sz, ::gsl::narrow_cast<ptrdiff_t>(n));
   }
 
   inline bool is_zero(void *v, size_t sz)
