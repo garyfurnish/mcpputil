@@ -1,7 +1,7 @@
 #pragma once
 #include "posix_slab.hpp"
 #ifdef MCPPALLOC_POSIX
-#include <assert.h>
+#include <cassert>
 #include <iostream>
 #include <sys/mman.h>
 #include <unistd.h>
@@ -54,13 +54,13 @@ namespace mcpputil
     }
     void *ret = nullptr;
     // attempt to map the memory.
-    if (addr) {
+    if (addr != nullptr) {
       ret = ::mmap(addr, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | c_map_anonymous | c_map_no_reserve | MAP_FIXED, -1, 0);
     } else {
       ret = ::mmap(addr, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | c_map_anonymous | c_map_no_reserve, -1, 0);
     }
     // check of failure.
-    if (!ret || ret == reinterpret_cast<void *>(-1)) {
+    if (ret == nullptr || ret == reinterpret_cast<void *>(-1)) {
       ::std::cerr << "\n Failed to allocate memory " << addr << " " << size << ::std::endl;
       return false;
     }
@@ -82,7 +82,7 @@ namespace mcpputil
       return true;
     }
     // make sure memory has already been allocated.
-    if (!m_addr) {
+    if (m_addr == nullptr) {
       return false;
     }
     // try to expand the memory.
@@ -97,11 +97,11 @@ namespace mcpputil
 #endif
   inline void slab_t::destroy()
   {
-    if (m_addr) {
+    if (m_addr != nullptr) {
       // if memory exists, unmap it.
       int ret = ::munmap(m_addr, m_size);
-      if (ret) {
-        assert(0);
+      if (ret != 0) {
+        assert(false);
       }
     }
     m_valid = false;
@@ -116,11 +116,11 @@ namespace mcpputil
   {
     // try to allocate some memory of requested size.
     void *addr = ::mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_NORESERVE | MAP_PRIVATE | c_map_anonymous, -1, 0);
-    if (addr) {
+    if (addr != nullptr) {
       // if it succeeded, immediately unmap it.
       int ret = ::munmap(addr, size);
-      if (ret) {
-        assert(0);
+      if (ret != 0) {
+        assert(false);
       }
       // address is known to be a good hole for a slab as long as nothing else is mmaped.
       return addr;

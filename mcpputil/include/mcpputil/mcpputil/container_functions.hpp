@@ -12,9 +12,8 @@ namespace mcpputil
     const auto plb = ub - 1;
     if (ub == begin || comparator(*plb, val)) {
       return ub;
-    } else {
-      return plb;
     }
+    return plb;
   }
   template <typename T>
   void clear_capacity(T &&t)

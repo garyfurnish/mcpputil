@@ -29,7 +29,7 @@ namespace mcpputil
     using vector_extrensic_allocator_t<value_type>::empty;
     using vector_extrensic_allocator_t<value_type>::destroy;
 
-    flat_set_extrensic_allocator_t();
+    flat_set_extrensic_allocator_t() = default;
     explicit flat_set_extrensic_allocator_t(const Compare &comp);
     template <typename InputIt, typename Allocator, typename = typename ::std::iterator_traits<InputIt>::iterator_category>
     flat_set_extrensic_allocator_t(InputIt first, InputIt last, Allocator &alloc, const compare_type &comp = compare_type{});
@@ -66,15 +66,15 @@ namespace mcpputil
     iterator find(const key_type &key);
     const_iterator find(const key_type &key) const;
     template <typename FK, typename = typename FK::is_transparent>
-    iterator find(const FK &x);
+    iterator find(const FK &key);
     template <typename FK, typename = typename FK::is_transparent>
-    const_iterator find(const FK &x) const;
+    const_iterator find(const FK &key) const;
     iterator lower_bound(const key_type &key);
     const_iterator lower_bound(const key_type &key) const;
     template <typename FK, typename = typename FK::is_transparent>
-    iterator lower_bound(const FK &x);
+    iterator lower_bound(const FK &key);
     template <typename FK, typename = typename FK::is_transparent>
-    const_iterator lower_bound(const FK &x) const;
+    const_iterator lower_bound(const FK &key) const;
     iterator upper_bound(const key_type &key);
     const_iterator upper_bound(const key_type &key) const;
     template <typename FK, typename = typename FK::is_transparent>
@@ -85,10 +85,6 @@ namespace mcpputil
   private:
     compare_type m_compare;
   };
-  template <class Key, typename Compare>
-  flat_set_extrensic_allocator_t<Key, Compare>::flat_set_extrensic_allocator_t()
-  {
-  }
   template <class Key, typename Compare>
   flat_set_extrensic_allocator_t<Key, Compare>::flat_set_extrensic_allocator_t(const Compare &comp) : m_compare(comp)
   {
@@ -250,7 +246,6 @@ namespace mcpputil
       }
     }
     vector_extrensic_allocator_t<key_type>::insert(it, first, last, allocator);
-    return;
   }
   template <class Key, typename Compare>
   template <typename Allocator>

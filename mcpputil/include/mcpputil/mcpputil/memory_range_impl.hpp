@@ -52,7 +52,7 @@ namespace mcpputil
   template <typename Pointer_Type>
   constexpr auto memory_range_t<Pointer_Type>::empty() const noexcept -> bool
   {
-    return size() == 0;
+    return end() - begin() == 0;
   }
   template <typename Pointer_Type>
   constexpr auto memory_range_t<Pointer_Type>::contains(const pointer_type &ptr) const noexcept -> bool

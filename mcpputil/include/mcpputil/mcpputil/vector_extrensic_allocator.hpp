@@ -32,10 +32,10 @@ namespace mcpputil
     template <class InputIt, typename Allocator>
     vector_extrensic_allocator_t(InputIt first, InputIt last, Allocator &allocator);
     template <typename Allocator>
-    vector_extrensic_allocator_t(const vector_extrensic_allocator_t &other, Allocator &alloc);
+    vector_extrensic_allocator_t(const vector_extrensic_allocator_t &other, Allocator &allocator);
     vector_extrensic_allocator_t(vector_extrensic_allocator_t &&other);
     template <typename Allocator>
-    vector_extrensic_allocator_t(std::initializer_list<T> init, Allocator &alloc);
+    vector_extrensic_allocator_t(std::initializer_list<T> init, Allocator &allocator);
     template <typename Allocator>
     void destroy(Allocator &allocator);
     ~vector_extrensic_allocator_t();

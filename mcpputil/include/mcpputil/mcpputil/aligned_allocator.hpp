@@ -27,7 +27,7 @@ namespace mcpputil
      **/
     template <class Type>
     struct rebind {
-      typedef aligned_allocator_t<Type, alignment> other;
+      using other = aligned_allocator_t<Type, alignment>;
     };
     aligned_allocator_t() = default;
     aligned_allocator_t(const aligned_allocator_t<void, Alignment> &) noexcept = default;
@@ -98,7 +98,7 @@ namespace mcpputil
      **/
     template <class Type>
     struct rebind {
-      typedef aligned_allocator_t<Type, alignment> other;
+      using other = aligned_allocator_t<Type, alignment>;
     };
     /**
      * \brief Return address of reference.
