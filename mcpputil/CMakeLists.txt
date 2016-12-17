@@ -18,6 +18,7 @@ list (APPEND SRC_FILES
   include/mcpputil/mcpputil/container_functions.hpp
   include/mcpputil/mcpputil/declarations.hpp
   include/mcpputil/mcpputil/equipartition.hpp
+  include/mcpputil/mcpputil/flat_map_extrensic_allocator.hpp
   include/mcpputil/mcpputil/function_iterator.hpp
   include/mcpputil/mcpputil/intrinsics.hpp
   include/mcpputil/mcpputil/iterator.hpp
@@ -35,14 +36,24 @@ list (APPEND SRC_FILES
   include/mcpputil/mcpputil/view_traits.hpp
   include/mcpputil/mcpputil/warning_wrapper_pop.hpp
   include/mcpputil/mcpputil/warning_wrapper_push.hpp
+  src/allocator.cpp
+  src/container_functions.cpp
+  src/flat_map_extrensic_allocator.cpp
+  src/flat_set_extrensic_allocator.cpp
   src/memory_range.cpp
-  src/thread_id_manager.cpp)
+  src/pointer_utils.cpp
+  src/thread_id_manager.cpp
+  src/vector_utils.cpp
+  src/vector_extrensic_allocator.cpp)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-list (APPEND SRC_FILES ${SRC_FILES}
+  list (APPEND SRC_FILES ${SRC_FILES}
   include/mcpputil/mcpputil/win32_slab.hpp
   include/mcpputil/mcpputil/win32_slab_impl.hpp
   src/win32_slab.cpp)
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+ELSE()
+  list (APPEND SRC_FILES ${SRC_FILES}
+  src/posix_slab.cpp)
+ENDIF()
 add_library(mcpputil ${SRC_FILES})
 INSTALL(DIRECTORY "include/mcpputil" DESTINATION "include")
 INSTALL(TARGETS mcpputil

@@ -3,6 +3,8 @@
 #include <mcpputil/mcpputil/intrinsics.hpp>
 #include <mcpputil/mcpputil/literals.hpp>
 #include <mcpputil/mcpputil/thread_id_manager.hpp>
+void test_vector_extrensic_allocator();
+void test_flat_set_extrensic_allocator();
 using namespace bandit;
 using namespace ::mcpputil::literals;
 go_bandit([]() {
@@ -139,7 +141,6 @@ go_bandit([]() {
       ret = map.insert(::std::make_pair(5, 1));
       ::std::vector<::std::pair<size_t, size_t>> t1{{5, 0}, {5, 1}};
       AssertThat(::std::equal(map.begin(), map.end(), t1.begin()), IsTrue());
-
     });
     it("backed_ordered_multimap_test2", []() {
       size_t array[500];
@@ -151,6 +152,8 @@ go_bandit([]() {
     });
 
   });
+  test_vector_extrensic_allocator();
+  test_flat_set_extrensic_allocator();
 });
 
 int main(int argc, char *argv[])

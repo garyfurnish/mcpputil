@@ -27,8 +27,9 @@ namespace mcpputil
       }
       volatile char *p = reinterpret_cast<volatile char *>(p_sz);
 
-      while (n--)
+      while ((n--) != 0) {
         *p++ = 0;
+      }
     }
   }
   inline void secure_zero_stream(void *s, size_t n)
@@ -46,7 +47,7 @@ namespace mcpputil
 #elif defined(__SSE2__)
     const __m128i zero = _mm_setzero_si128();
     __m128i *p_m128 = reinterpret_cast<__m128i *>(s);
-    if (!(reinterpret_cast<size_t>(s) % 16)) {
+    if ((reinterpret_cast<size_t>(s) % 16) == 0) {
       while (n >= sizeof(__m128i)) {
         _mm_stream_si128(p_m128++, zero);
         n -= sizeof(__m128i);
@@ -63,8 +64,9 @@ namespace mcpputil
       n -= sizeof(size_t) * 4;
     }
 #endif
-    if (p_sz)
+    if (p_sz != nullptr) {
       details::secure_zero_no_vector(p_sz, n);
+    }
   }
   /**
    * \brief Securely zero a pointer, guarenteed to not be optimized out.
@@ -90,7 +92,7 @@ namespace mcpputil
 #elif defined(__SSE2__)
     const __m128i zero = _mm_setzero_si128();
     volatile __m128i *p_m128 = reinterpret_cast<volatile __m128i *>(s);
-    if (!(reinterpret_cast<size_t>(s) % 16)) {
+    if ((reinterpret_cast<size_t>(s) % 16) == 0) {
       while (n >= sizeof(__m128i)) {
         *p_m128++ = zero;
         n -= sizeof(__m128i);
@@ -119,8 +121,9 @@ namespace mcpputil
 
   inline void put_unique_seeded_random(void *v, size_t sz)
   {
-    if (sz % sizeof(uint32_t))
+    if ((sz % sizeof(uint32_t)) != 0) {
       throw ::std::runtime_error("Put unique seeded random size must be divisible by  sizeof(uint32_t)");
+    }
     sz /= sizeof(uint32_t);
     std::mt19937 mt;
     auto ptr = reinterpret_cast<uint32_t *>(v);
@@ -131,7 +134,7 @@ namespace mcpputil
   }
   inline bool is_unique_seeded_random(void *v, ptrdiff_t sz)
   {
-    if (sz % ::gsl::narrow<ptrdiff_t>(sizeof(uint32_t))) {
+    if ((sz % ::gsl::narrow<ptrdiff_t>(sizeof(uint32_t))) != 0) {
       throw ::std::runtime_error("Put unique seeded random size must be divisible by  sizeof(uint32_t)");
     }
     sz /= sizeof(uint32_t);
@@ -139,15 +142,17 @@ namespace mcpputil
     auto ptr = reinterpret_cast<uint32_t *>(v);
     const auto end = ptr + sz;
     while (ptr != end) {
-      if (*ptr++ != static_cast<uint32_t>(mt()))
+      if (*ptr++ != static_cast<uint32_t>(mt())) {
         return false;
+      }
     }
     return true;
   }
   inline size_t is_unique_seeded_random_failure_loc(void *v, size_t sz)
   {
-    if (sz % sizeof(uint32_t))
+    if ((sz % sizeof(uint32_t)) != 0) {
       throw ::std::runtime_error("Put unique seeded random size must be divisible by  sizeof(uint32_t)");
+    }
     sz /= sizeof(uint32_t);
     std::mt19937 mt;
     auto ptr = reinterpret_cast<uint32_t *>(v);

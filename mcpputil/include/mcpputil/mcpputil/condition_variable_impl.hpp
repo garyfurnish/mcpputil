@@ -54,7 +54,7 @@ namespace cgc1
       }
     }
     // do this forever
-    while (1) {
+    while (true) {
       // we are going to unlock and sleep.
       lock.unlock();
       it->m_flag.lock();

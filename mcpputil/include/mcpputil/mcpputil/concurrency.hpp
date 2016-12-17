@@ -156,7 +156,7 @@ namespace mcpputil
       (void)lock1;
       (void)lock2;
     }
-    ~lock_assume_t() RELEASE()
+    ~lock_assume_t() RELEASE() // NOLINT
     {
     }
   } SCOPED_CAPABILITY;
@@ -277,11 +277,11 @@ namespace mcpputil
   class CAPABILITY("mutex") spinlock_t
   {
   public:
-    spinlock_t() noexcept : m_lock(0)
+    spinlock_t() noexcept : m_lock(false)
     {
     }
     spinlock_t(const spinlock_t &) = delete;
-    spinlock_t(spinlock_t &&) = default;
+    spinlock_t(spinlock_t &&) = delete;
 #ifndef __clang__
     /**
      * \brief Lock lock.
@@ -297,8 +297,9 @@ namespace mcpputil
      **/
     void lock() ACQUIRE()
     {
-      while (!try_lock())
+      while (!try_lock()) {
         __asm__ volatile("pause");
+      }
     }
 #endif
     /**
@@ -364,10 +365,11 @@ namespace mcpputil
      **/
     void lock()
     {
-      if (m_lock1 && m_lock2)
+      if (m_lock1 && m_lock2) {
         ::std::lock(*m_lock1, *m_lock2);
-      else
+      } else {
         ::std::terminate();
+      }
     }
     /**
      * \brief Unlock locks.
@@ -400,10 +402,10 @@ namespace mcpputil
     bool try_lock() NO_THREAD_SAFETY_ANALYSIS
     {
       if (m_lock1->try_lock()) {
-        if (m_lock2->try_lock())
+        if (m_lock2->try_lock()) {
           return true;
-        else
-          m_lock1->unlock();
+        }
+        m_lock1->unlock();
       }
       return false;
     }

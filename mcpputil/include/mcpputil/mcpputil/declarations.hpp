@@ -14,7 +14,7 @@
 #define MCPPALLOC_OPT_ALWAYS_INLINE __attribute__((always_inline)) inline
 #else
 #define MCPPALLOC_OPT_INLINE
-#define MCPPALLOC_ALWAYS_INLINE
+#define MCPPALLOC_ALWAYS_INLINE inline
 #define MCPPALLOC_OPT_ALWAYS_INLINE inline
 #endif
 #define MCPPALLOC_POSIX
@@ -28,7 +28,7 @@
 #else
 // WIN32
 #define MCPPALLOC_OPT_INLINE
-#define MCPPALLOC_ALWAYS_INLINE
+#define MCPPALLOC_ALWAYS_INLINE inline
 #define MCPPALLOC_OPT_ALWAYS_INLINE inline
 #define if_constexpr if
 #define mcpputil_likely(x) x

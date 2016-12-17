@@ -3,9 +3,17 @@
 namespace mcpputil
 {
   /**
-   * \brief Alignment on this system in bytes.
+   * \brief Default alignment on this system for mcpputils in bytes.
   **/
   static constexpr size_t c_alignment = 16;
+  /**
+   * \brief Default alignment on this system.
+   **/
+  static constexpr size_t cs_default_alignment = 8;
+  /**
+   * \brief Default cache line size on reasonable systems
+   **/
+  static constexpr size_t cs_default_cache_line_size = 64;
   /**
    * \brief Power of two to align to on this system.
   **/
