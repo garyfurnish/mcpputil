@@ -1,4 +1,5 @@
 #include "declarations.hpp"
+#include <gsl/gsl>
 #pragma once
 namespace mcpputil
 {
@@ -22,18 +23,26 @@ namespace mcpputil
   /**
    * \brief Align size to system alignment.
    **/
-  inline constexpr size_t align(size_t size) noexcept
+  inline size_t align(size_t size) noexcept
   {
+    ::gsl::narrow<ptrdiff_t>(size);
     return ((size + c_alignment - 1) >> c_align_pow2) << c_align_pow2;
   }
 
   /**
    * \brief Align size to alignment.
    **/
-  inline constexpr size_t align(size_t sz, size_t alignment) noexcept
+  inline size_t align(size_t sz, size_t alignment) noexcept
+  {
+    ::gsl::narrow<ptrdiff_t>(sz);
+    ::gsl::narrow<ptrdiff_t>(alignment);
+    return ::gsl::narrow<size_t>(((sz + alignment - 1) / alignment) * alignment);
+  }
+  inline constexpr size_t cs_align(size_t sz, size_t alignment) noexcept
   {
     return ((sz + alignment - 1) / alignment) * alignment;
   }
+
   /**
    * \brief Align pointer to alignment.
   **/
