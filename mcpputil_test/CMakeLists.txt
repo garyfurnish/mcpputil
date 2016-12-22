@@ -7,6 +7,7 @@ ENDIF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 add_executable(mcpputil_test
   main.cpp
   flat_set_extrensic_allocator.cpp
+  memory_range_group.cpp
   vector_extrensic_allocator.cpp
   )
 target_link_libraries(mcpputil_test mcpputil pthread)
