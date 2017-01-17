@@ -185,7 +185,7 @@ namespace mcpputil
    * \tparam Alignment Alignment of allocator for type.
   **/
   template <typename Type, size_t Alignment>
-  struct cgc_allocator_deleter_t<Type, aligned_allocator_t<void, Alignment>> {
+  struct mcpputil_allocator_deleter_t<Type, aligned_allocator_t<void, Alignment>> {
     using type = aligned_deleter_t<Alignment>;
   };
 }
