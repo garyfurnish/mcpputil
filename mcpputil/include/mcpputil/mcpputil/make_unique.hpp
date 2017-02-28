@@ -6,7 +6,7 @@ namespace mcpputil
    * \brief Tag based dispatch for finding a deleter for a given allocator.
    *
    * TODO: Needs more documentation.
-  **/
+   **/
   template <typename T, typename Allocator>
   struct mcpputil_allocator_deleter_t {
     using type = mcpputil_allocator_deleter_t<T, typename Allocator::template rebind<void>::other>;

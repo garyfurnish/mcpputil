@@ -1,7 +1,11 @@
 #pragma once
 #include <algorithm>
 #include <emmintrin.h>
+// clang-format: off
+#include "warning_wrapper_pop.hpp"
+#include "warning_wrapper_push.hpp"
 #include <gsl/gsl>
+// clang-format: on
 #include <random>
 #include <stdexcept>
 namespace mcpputil

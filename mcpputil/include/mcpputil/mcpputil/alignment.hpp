@@ -5,7 +5,7 @@ namespace mcpputil
 {
   /**
    * \brief Default alignment on this system for mcpputils in bytes.
-  **/
+   **/
   static constexpr size_t c_alignment = 16;
   /**
    * \brief Default alignment on this system.
@@ -17,7 +17,7 @@ namespace mcpputil
   static constexpr size_t cs_default_cache_line_size = 64;
   /**
    * \brief Power of two to align to on this system.
-  **/
+   **/
   static constexpr size_t c_align_pow2 = 4;
   static_assert((1 << c_align_pow2) == c_alignment, "Alignment not valid.");
   /**
@@ -45,14 +45,14 @@ namespace mcpputil
 
   /**
    * \brief Align pointer to alignment.
-  **/
+   **/
   inline void *align(void *iptr, size_t alignment) noexcept
   {
     return reinterpret_cast<void *>(align(reinterpret_cast<size_t>(iptr), alignment));
   }
   /**
    * \brief Align pointer to alignment.
-  **/
+   **/
   inline const void *align(const void *iptr, size_t alignment) noexcept
   {
     return reinterpret_cast<void *>(align(reinterpret_cast<size_t>(iptr), alignment));
@@ -60,14 +60,14 @@ namespace mcpputil
 
   /**
    * \brief Align size to a given power of 2.
-  **/
+   **/
   inline constexpr size_t align_pow2(size_t size, size_t align_pow) noexcept
   {
     return ((size + (static_cast<size_t>(1) << align_pow) - 1) >> align_pow) << align_pow;
   }
   /**
    * \brief Align pointer to a given power of 2.
-  **/
+   **/
   template <typename T>
   inline constexpr T *align_pow2(T *iptr, size_t align_pow) noexcept
   {

@@ -6,7 +6,9 @@
 void test_vector_extrensic_allocator();
 void test_flat_set_extrensic_allocator();
 using namespace bandit;
+using namespace snowhouse;
 using namespace ::mcpputil::literals;
+template class ::mcpputil::containers::backed_ordered_multimap<int, int, ::std::less<int>>;
 go_bandit([]() {
   describe("thread_id_manager", []() {
     it("manager setup", []() {

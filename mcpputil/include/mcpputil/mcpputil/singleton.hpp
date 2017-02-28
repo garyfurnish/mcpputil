@@ -11,13 +11,13 @@ namespace mcpputil
   public:
     /**
      * \brief Initialize the singleton.
-    **/
+     **/
     singleton_t() noexcept;
     singleton_t(const singleton_t<T> &) = delete;
     singleton_t(singleton_t<T> &&) = delete;
     /**
      * \brief Destructor for the singleton.
-    **/
+     **/
     ~singleton_t();
     singleton_t<T> &operator=(const singleton_t<T> &) = delete;
     singleton_t<T> &operator=(singleton_t<T> &&) = delete;

@@ -30,27 +30,27 @@ namespace mcpputil
      * Constructor aborts on failure.
      * @param size Size of memory to allocate.
      * @param addr Address to allocate at.
-    **/
+     **/
     slab_t(size_t size, void *addr);
     /**
      * \brief Constructor aborts on failure.
      *
      * Constructor aborts on failure.
      * @param size Size of memory to allocate.
-    **/
+     **/
     slab_t(size_t size);
     ~slab_t();
     /**
      * \brief Return start address of memory slab.
-    **/
+     **/
     void *addr() const;
     /**
      * \brief Return the size of the slab.
-    **/
+     **/
     size_type size() const;
     /**
      * \brief Return true if the slab is valid, false otherwise.
-    **/
+     **/
     bool valid() const;
     /**
      * Perform slab allocation.
@@ -63,28 +63,28 @@ namespace mcpputil
     /**
      * \brief Attempt to expand the slab.
      * @return True on success, false on failure.
-    **/
+     **/
     bool expand(size_t size);
     /**
      * \brief Destroy the memory slab.
-    **/
+     **/
     void destroy();
     /**
      * \brief Return the memory page size on the system.
-    **/
+     **/
     static size_t page_size();
     /**
      * \brief Find a hole in the current memory layout of at least size.
      * This works by reserving the memory.
-    **/
+     **/
     static void *find_hole(size_t size);
     /**
      * \brief Return start address of memory slab.
-    **/
+     **/
     uint8_t *begin() const;
     /**
      * \brief Return end address of memory slab.
-    **/
+     **/
     uint8_t *end() const;
 
   private:

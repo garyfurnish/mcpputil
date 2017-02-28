@@ -31,7 +31,7 @@ namespace mcpputil
   }
   /**
    * \brief Insert val into a sorted container if val would be unique.
-  **/
+   **/
   template <typename Container, typename T, typename Compare>
   bool insert_unique_sorted(Container &c, T &&val, Compare comp = Container::key_compare())
   {

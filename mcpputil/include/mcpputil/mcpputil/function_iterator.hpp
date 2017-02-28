@@ -5,7 +5,7 @@ namespace mcpputil
    * \brief Forward iterator for type T that takes a functional that defines how to advance the iterator.
    *
    * The rule is that Current = Advance(Current).
-  **/
+   **/
   template <typename T, typename Advance>
   class functional_iterator_t
   {
@@ -61,7 +61,7 @@ namespace mcpputil
   };
   /**
    * \brief Function to make functional iterators that uses type deduction to avoid end user templates.
-  **/
+   **/
   template <typename T, typename Advance>
   auto make_functional_iterator(T *t, Advance &&advance) noexcept -> functional_iterator_t<T, Advance>
   {
@@ -84,7 +84,7 @@ namespace mcpputil
   using next_iterator = functional_iterator_t<T, iterator_next_advancer_t>;
   /**
    * \brief Function to make next iterators that uses type deduction to avoid end user templates.
-  **/
+   **/
   template <typename T>
   auto make_next_iterator(T *t) noexcept -> next_iterator<T>
   {
@@ -105,7 +105,7 @@ namespace mcpputil
   using template_next_iterator = functional_iterator_t<T, iterator_template_next_advancer_t<Template>>;
   /**
    * \brief Function to make template_next iterators that uses type deduction to avoid end user templates.
-  **/
+   **/
   template <typename Template, typename T>
   auto make_template_next_iterator(T *t) noexcept
   {
