@@ -1,10 +1,10 @@
 #pragma once
 #include <algorithm>
-#include <emmintrin.h>
+#include "intrinsics.hpp"
 // clang-format: off
-#include "warning_wrapper_pop.hpp"
 #include "warning_wrapper_push.hpp"
 #include <gsl/gsl>
+#include "warning_wrapper_pop.hpp"
 // clang-format: on
 #include <random>
 #include <stdexcept>

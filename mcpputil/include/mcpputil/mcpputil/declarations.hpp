@@ -4,6 +4,7 @@
 #define _ITERATOR_DEBUG_LEVEL 0
 #endif
 #include <cstddef>
+#include <cstdint>
 #ifndef _WIN32
 // NOT WIN32
 #ifndef MCPPALLOC_NO_INLINES

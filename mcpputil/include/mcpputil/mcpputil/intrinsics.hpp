@@ -2,6 +2,10 @@
 #include "declarations.hpp"
 #ifndef _WIN32
 // NOT WIN32
+#include <emmintrin.h>
+#if defined(__AVX__) && !defined(__APPLE__)
+#include <immintrin.h>
+#endif
 #define mcpputil_builtin_prefetch(ADDR) __builtin_prefetch(ADDR)
 #define mcpputil_builtin_clz1(X) __builtin_clzl(X)
 #define mcpputil_builtin_current_stack() __builtin_frame_address(0)
