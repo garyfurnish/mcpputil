@@ -2,7 +2,7 @@
 #include "concurrency.hpp"
 #include "declarations.hpp"
 #include "singleton.hpp"
-#include <boost/optional.hpp>
+#include <mcpputil/mcpputil/boost/optional.hpp>
 #include <gsl/gsl>
 #include <mcpputil/mcpputil/boost/container/flat_map.hpp>
 #include <thread>
