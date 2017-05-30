@@ -2,9 +2,9 @@
 #include "concurrency.hpp"
 #include "declarations.hpp"
 #include "singleton.hpp"
-#include <mcpputil/mcpputil/boost/optional.hpp>
 #include <gsl/gsl>
 #include <mcpputil/mcpputil/boost/container/flat_map.hpp>
+#include <mcpputil/mcpputil/boost/optional.hpp>
 #include <thread>
 #include <vector>
 namespace mcpputil

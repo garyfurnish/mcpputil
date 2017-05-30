@@ -45,6 +45,7 @@
 #pragma warning(disable : 5030)
 #define MCPPALLOC_NO_INLINE __declspec(noinline)
 #endif
+#define BOOST_NO_AUTO_PTR
 namespace mcpputil
 {
   /**

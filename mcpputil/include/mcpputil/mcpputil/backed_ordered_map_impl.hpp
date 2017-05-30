@@ -199,7 +199,7 @@ namespace mcpputil::containers
   auto backed_ordered_multimap<K, V, Less>::erase(const_iterator cit) -> iterator
   {
     if (cit >= end()) {
-      return 0;
+      return nullptr;
     }
     const auto it = begin() + (cit - begin());
     ::std::rotate(it, it + 1, end());
