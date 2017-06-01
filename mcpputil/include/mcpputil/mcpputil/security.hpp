@@ -19,8 +19,8 @@ namespace mcpputil
      **/
     inline void secure_zero_no_vector(volatile void *s, size_t in_n)
     {
-      ptrdiff_t n = ::gsl::narrow<ptrdiff_t>(in_n);
-      volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(s);
+      auto n = ::gsl::narrow<ptrdiff_t>(in_n);
+      auto *p_sz = reinterpret_cast<volatile size_t *>(s);
       while (n >= ::gsl::narrow_cast<ptrdiff_t>(sizeof(size_t))) {
 #ifdef __SSE__
         _mm_stream_pi(reinterpret_cast<__m64 *>(const_cast<size_t *>(p_sz)), __m64{0});
@@ -30,7 +30,7 @@ namespace mcpputil
 #endif
         n -= sizeof(size_t);
       }
-      volatile char *p = reinterpret_cast<volatile char *>(p_sz);
+      auto p = reinterpret_cast<volatile char *>(p_sz);
 
       while ((n--) != 0) {
         *p++ = 0;
@@ -41,7 +41,7 @@ namespace mcpputil
   {
 #if defined(__AVX__) && !defined(__APPLE__)
     __m256i zero256 = _mm256_setzero_si256();
-    __m256i *p_m256 = reinterpret_cast<__m256i *>(s);
+    auto p_m256 = reinterpret_cast<__m256i *>(s);
     if (!(reinterpret_cast<size_t>(s) % 32)) {
       while (n >= sizeof(__m256i)) {
         _mm256_stream_si256(p_m256++, zero256);
@@ -51,16 +51,16 @@ namespace mcpputil
     volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(p_m256);
 #elif defined(__SSE2__)
     const __m128i zero = _mm_setzero_si128();
-    __m128i *p_m128 = reinterpret_cast<__m128i *>(s);
+    auto p_m128 = reinterpret_cast<__m128i *>(s);
     if ((reinterpret_cast<size_t>(s) % 16) == 0) {
       while (n >= sizeof(__m128i)) {
         _mm_stream_si128(p_m128++, zero);
         n -= sizeof(__m128i);
       }
     }
-    volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(p_m128);
+    auto p_sz = reinterpret_cast<volatile size_t *>(p_m128);
 #else
-    volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(s);
+    auto p_sz = reinterpret_cast<volatile size_t *>(s);
     while (n >= sizeof(size_t) * 4) {
       *p_sz++ = 0;
       *p_sz++ = 0;
@@ -80,8 +80,8 @@ namespace mcpputil
   {
 #if defined(__AVX__) && !defined(__APPLE__)
     __m256i zero256 = _mm256_setzero_si256();
-    volatile __m256i *p_m256 = reinterpret_cast<volatile __m256i *>(s);
-    volatile __m128i *p_m128 = reinterpret_cast<volatile __m128i *>(p_m256);
+    auto p_m256 = reinterpret_cast<volatile __m256i *>(s);
+    auto p_m128 = reinterpret_cast<volatile __m128i *>(p_m256);
     if (!s % 32) {
       while (n >= sizeof(__m256i)) {
         *p_m256++ = zero256;
@@ -93,19 +93,19 @@ namespace mcpputil
         n -= sizeof(__m128i);
       }
     }
-    volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(p_m128);
+    auto p_sz = reinterpret_cast<volatile size_t *>(p_m128);
 #elif defined(__SSE2__)
     const __m128i zero = _mm_setzero_si128();
-    volatile __m128i *p_m128 = reinterpret_cast<volatile __m128i *>(s);
+    auto p_m128 = reinterpret_cast<volatile __m128i *>(s);
     if ((reinterpret_cast<size_t>(s) % 16) == 0) {
       while (n >= sizeof(__m128i)) {
         *p_m128++ = zero;
         n -= sizeof(__m128i);
       }
     }
-    volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(p_m128);
+    auto p_sz = reinterpret_cast<volatile size_t *>(p_m128);
 #else
-    volatile size_t *p_sz = reinterpret_cast<volatile size_t *>(s);
+    auto p_sz = reinterpret_cast<volatile size_t *>(s);
     while (n >= sizeof(size_t) * 8) {
       *p_sz++ = 0;
       *p_sz++ = 0;
