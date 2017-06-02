@@ -35,7 +35,7 @@ namespace mcpputil
     {
       return m_t;
     }
-    functional_iterator_t<T, Advance> &operator++(int)noexcept
+    const functional_iterator_t<T, Advance> operator++(int)noexcept
     {
       auto ret = functional_iterator_t<T, Advance>(m_t, m_advance);
       m_t = m_advance(m_t);

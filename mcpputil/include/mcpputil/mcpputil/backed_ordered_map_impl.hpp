@@ -191,7 +191,7 @@ namespace mcpputil::containers
     while (it_erase_end != end() && !m_compare(k, it_erase_end->first)) {
       it_erase_end++;
     }
-    const size_t num_erased = static_cast<size_t>(it_erase_end - it);
+    auto num_erased = static_cast<size_t>(it_erase_end - it);
     erase(it, it_erase_end);
     return num_erased;
   }
@@ -212,7 +212,7 @@ namespace mcpputil::containers
   {
     const auto it_erase_begin = begin() + (begin_iterator - begin());
     const auto it_erase_end = begin() + (end_iterator - begin());
-    const size_t num_erased = static_cast<size_t>(it_erase_end - it_erase_begin);
+    auto num_erased = static_cast<size_t>(it_erase_end - it_erase_begin);
     if (0 == num_erased) {
       return it_erase_end;
     }
