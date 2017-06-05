@@ -1,8 +1,8 @@
 #pragma once
+#include "boost/optional.hpp"
 #include "concurrency.hpp"
 #include "declarations.hpp"
 #include "singleton.hpp"
-#include <boost/optional.hpp>
 #include <gsl/gsl>
 #include <mcpputil/mcpputil/boost/container/flat_map.hpp>
 #include <thread>

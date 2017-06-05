@@ -3,6 +3,7 @@
 #include <mcpputil/mcpputil/flat_set_extrensic_allocator.hpp>
 #include <memory>
 using namespace bandit;
+using namespace snowhouse;
 
 void test_flat_set_extrensic_allocator()
 {

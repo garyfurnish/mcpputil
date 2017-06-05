@@ -108,7 +108,7 @@ namespace mcpputil
        *
        * Complexity: Logarithmic search time plus erasure time linear to the elements with bigger keys.
        * @return Returns the number of erased elements.
-      **/
+       **/
       auto erase(const key_type &) -> size_type;
       /**
        * \brief Erases the element pointed to by p.
@@ -117,7 +117,7 @@ namespace mcpputil
        * Note: Invalidates elements with keys not less than the erased element.
        * @return An iterator pointing to the element immediately following q prior to the element being erased. If no such element
        *exists, returns end().
-      **/
+       **/
       auto erase(const_iterator) -> iterator;
       /**
        * \brief Erases all the elements in the range [first, last).
@@ -132,7 +132,7 @@ namespace mcpputil
        *
        * Postcondition: size() == 0.
        * Complexity: linear in size().
-      **/
+       **/
       void clear();
       /**
        *

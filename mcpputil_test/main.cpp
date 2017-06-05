@@ -5,7 +5,8 @@
 #include <mcpputil/mcpputil/thread_id_manager.hpp>
 void test_vector_extrensic_allocator();
 void test_flat_set_extrensic_allocator();
-using namespace bandit;
+using namespace ::bandit;
+using namespace ::snowhouse;
 using namespace ::mcpputil::literals;
 go_bandit([]() {
   describe("thread_id_manager", []() {

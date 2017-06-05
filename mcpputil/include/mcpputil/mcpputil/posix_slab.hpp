@@ -39,27 +39,27 @@ namespace mcpputil
      * Constructor aborts on failure.
      * @param size Size of memory to allocate.
      * @param addr Address to allocate at.
-    **/
+     **/
     slab_t(size_t size, void *addr);
     /**
      * \brief Constructor
      *
      * Constructor aborts on failure.
      * @param size Size of memory to allocate.
-    **/
+     **/
     slab_t(size_t size);
     ~slab_t();
     /**
      * \brief Return start address of memory slab.
-    **/
+     **/
     void *addr() const noexcept;
     /**
      * \brief Return the size of the slab.
-    **/
+     **/
     size_type size() const noexcept;
     /**
      * \brief Return true if the slab is valid, false otherwise.
-    **/
+     **/
     bool valid() const noexcept;
     /**
      * \brief Perform slab allocation.
@@ -67,36 +67,36 @@ namespace mcpputil
      * @param size Size of slab.
      * @param addr Optional address to try to allocate at.
      * @return True on success, false on failure.
-    **/
+     **/
     bool allocate(size_t size, void *addr = nullptr);
     /**
      * \brief Attempt to expand the slab.
      * @param size New size of slab.
      * @return True on success, false on failure.
-    **/
+     **/
     bool expand(size_t size);
     /**
      * \brief Destroy the memory slab.
-    **/
+     **/
     void destroy();
     /**
      * \brief Return the memory page size on the system.
-    **/
+     **/
     static size_t page_size() noexcept;
     /**
      * \brief Find a hole in the current memory layout of at least size.
      *
      * This works by allocating a slab and freeing it.
      * On lazy systems this should be relatively cheap.
-    **/
+     **/
     static void *find_hole(size_t size);
     /**
      * \brief Return start address of memory slab.
-    **/
+     **/
     uint8_t *begin() const noexcept;
     /**
      * \brief Return end address of memory slab.
-    **/
+     **/
     uint8_t *end() const noexcept;
     /**
      * \brief Return memory range of memory slab.

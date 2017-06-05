@@ -18,8 +18,8 @@
 #pragma GCC diagnostic ignored "-Wunused-function"
 #pragma GCC diagnostic ignored "-Wunused-macros"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-#ifndef __clang__
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+#ifndef __clang__
 #pragma GCC diagnostic ignored "-Wunsafe-loop-optimizations"
 #endif
 #endif
@@ -56,6 +56,8 @@
 #pragma clang diagnostic ignored "-Wunused-macros"
 #pragma clang diagnostic ignored "-Wweak-vtables"
 #pragma clang diagnostic ignored "-Wundefined-reinterpret-cast"
+#pragma clang diagnostic ignored "-Wundefined-func-template"
+#pragma clang diagnostic ignored "-Wunused-template"
 #endif
 #if defined(_MSC_VER)
 #pragma warning(push)

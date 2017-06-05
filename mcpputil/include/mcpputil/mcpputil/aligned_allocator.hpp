@@ -167,7 +167,7 @@ namespace mcpputil
    *
    * Use for unique/shared ptrs.
    * \tparam Alignment alignment of allocator that allocated memory.
-  **/
+   **/
   template <size_t Alignment>
   struct aligned_deleter_t {
     template <typename T>
@@ -183,7 +183,7 @@ namespace mcpputil
    *
    * \tparam Type type to delete.
    * \tparam Alignment Alignment of allocator for type.
-  **/
+   **/
   template <typename Type, size_t Alignment>
   struct cgc_allocator_deleter_t<Type, aligned_allocator_t<void, Alignment>> {
     using type = aligned_deleter_t<Alignment>;
