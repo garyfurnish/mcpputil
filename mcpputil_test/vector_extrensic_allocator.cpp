@@ -3,8 +3,7 @@
 #include <mcpputil/mcpputil/vector_extrensic_allocator.hpp>
 #include <memory>
 using namespace bandit;
-using namespace snowhouse;
-
+using namespace ::snowhouse;
 void test_vector_extrensic_allocator()
 {
   using mcpputil::vector_extrensic_allocator_t;

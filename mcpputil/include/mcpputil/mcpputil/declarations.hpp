@@ -4,6 +4,7 @@
 #define _ITERATOR_DEBUG_LEVEL 0
 #endif
 #include <cstddef>
+#include <cstdint>
 #ifndef _WIN32
 // NOT WIN32
 #ifndef MCPPALLOC_NO_INLINES
@@ -44,6 +45,7 @@
 #pragma warning(disable : 5030)
 #define MCPPALLOC_NO_INLINE __declspec(noinline)
 #endif
+#define BOOST_NO_AUTO_PTR
 namespace mcpputil
 {
   /**

@@ -1,6 +1,6 @@
 #pragma once
 #include "condition_variable.hpp"
-namespace cgc1
+namespace mcpputil
 {
   template <typename Allocator>
   void internal_condition_variable_t<Allocator>::notify_all()

@@ -1,7 +1,7 @@
 #pragma once
 #include "concurrency.hpp"
 #include <list>
-namespace cgc1
+namespace mcpputil
 {
   /**
    * \brief Replacement for ::std::condition_variable_any that uses a given allocator.
