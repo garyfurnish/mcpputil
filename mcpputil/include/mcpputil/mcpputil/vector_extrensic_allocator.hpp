@@ -2,7 +2,7 @@
 #include "allocator.hpp"
 #include <cstddef>
 #include <gsl/gsl>
-#include <iostream>
+
 #include <iterator>
 #include <limits>
 #include <utility>
