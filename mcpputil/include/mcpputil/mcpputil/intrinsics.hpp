@@ -1,5 +1,13 @@
 #pragma once
 #include "declarations.hpp"
+namespace mcpputil
+{
+#if defined(__AVX512F__)
+  constexpr const bool c_intrin_avx_512f = true;
+#else
+  constexpr const bool c_intrin_avx_512f = false;
+#endif
+}
 #ifndef _WIN32
 // NOT WIN32
 #include <emmintrin.h>
@@ -14,6 +22,14 @@ namespace mcpputil
   mcpputil_always_inline size_t popcount(size_t x)
   {
     return static_cast<size_t>(__builtin_popcountll(x));
+  }
+  mcpputil_always_inline int ffs(int x)
+  {
+    return __builtin_ffs(x);
+  }
+  mcpputil_always_inline unsigned int ffs(unsigned int x)
+  {
+    return static_cast<unsigned int>(__builtin_ffs(static_cast<int>(x)));
   }
   mcpputil_always_inline size_t ffs(uint64_t x)
   {
