@@ -10,4 +10,7 @@ add_executable(mcpputil_test
   memory_range_group.cpp
   vector_extrensic_allocator.cpp
   )
-target_link_libraries(mcpputil_test mcpputil pthread)
+target_link_libraries(mcpputil_test mcpputil)
+if(UNIX)
+target_link_libraries(mcpputil_test pthread)
+endif()

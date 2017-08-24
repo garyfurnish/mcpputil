@@ -78,7 +78,7 @@ namespace mcpputil
       }
     } catch (...) {
       for (; d_first != current; ++d_first) {
-        ::std::allocator_traits<Allocator>::destroy(allocator, first);
+        ::std::allocator_traits<Allocator>::destroy(allocator, ::std::addressof(*d_first));
       }
       throw;
     }

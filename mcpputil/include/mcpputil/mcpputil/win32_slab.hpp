@@ -1,5 +1,6 @@
 #pragma once
 #include "declarations.hpp"
+#include "memory_range.hpp"
 #ifdef _WIN32
 namespace mcpputil
 {
@@ -81,11 +82,15 @@ namespace mcpputil
     /**
      * \brief Return start address of memory slab.
      **/
-    uint8_t *begin() const;
+    uint8_t *begin() const noexcept;
     /**
      * \brief Return end address of memory slab.
      **/
-    uint8_t *end() const;
+    uint8_t *end() const noexcept;
+	/**
+	* \brief Return memory range of memory.
+	**/
+	auto memory_range() const noexcept ->memory_range_t<uint8_t*>;
 
   private:
     /**

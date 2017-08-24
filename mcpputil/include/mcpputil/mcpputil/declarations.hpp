@@ -1,7 +1,9 @@
 #pragma once
 #ifdef _WIN32
-#undef _ITERATOR_DEBUG_LEVEL
-#define _ITERATOR_DEBUG_LEVEL 0
+#ifndef MCPPUTIL_DISABLE_ITERATOR_DEBUG
+//#undef _ITERATOR_DEBUG_LEVEL
+//#define _ITERATOR_DEBUG_LEVEL 0
+#endif
 #endif
 #include <cstddef>
 #include <cstdint>

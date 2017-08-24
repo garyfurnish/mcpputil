@@ -1,4 +1,5 @@
 #SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3")
+option(BUILD_SHARED_LIBS "Build as shared libraries" ON)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 #WINDOWS VISUAL STUDIO
 add_compile_options(/W4 /sdl /WX /MP /EHsc /std:c++latest)
