@@ -87,10 +87,10 @@ namespace mcpputil
      * \brief Return end address of memory slab.
      **/
     uint8_t *end() const noexcept;
-	/**
-	* \brief Return memory range of memory.
-	**/
-	auto memory_range() const noexcept ->memory_range_t<uint8_t*>;
+    /**
+     * \brief Return memory range of memory.
+     **/
+    auto memory_range() const noexcept -> memory_range_t<uint8_t *>;
 
   private:
     /**
