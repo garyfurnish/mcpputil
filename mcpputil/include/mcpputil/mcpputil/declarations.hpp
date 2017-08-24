@@ -46,6 +46,34 @@
 #define MCPPALLOC_NO_INLINE __declspec(noinline)
 #endif
 #define BOOST_NO_AUTO_PTR
+
+#pragma once
+#if defined _WIN32 || defined __CYGWIN__
+#ifdef mcpputil_EXPORTS
+#ifdef __GNUC__
+#define MCPPUTIL_DLL_PUBLIC __attribute__((dllexport))
+#else
+#define MCPPUTIL_DLL_PUBLIC __declspec(dllexport) // Note: actually gcc seems to also supports this syntax.
+#endif
+#else
+#ifdef __GNUC__
+#define MCPPUTIL_DLL_PUBLIC __attribute__((dllimport))
+#else
+#define MCPPUTIL_DLL_PUBLIC __declspec(dllimport) // Note: actually gcc seems to also supports this syntax.
+#endif
+#endif
+#define MCPPUTIL_DLL_LOCAL
+#else
+#define MCPPUTIL_DLL_PUBLIC __attribute__((visibility("default")))
+#define MCPPUTIL_DLL_LOCAL __attribute__((visibility("hidden")))
+#endif
+
+#ifdef _WIN32
+#define MCPPUTIL_PUBLIC __declspec(dllexport)
+#else
+#define MCPPUTIL_PUBLIC __attribute__((visibility("default")))
+#endif
+
 namespace mcpputil
 {
   /**

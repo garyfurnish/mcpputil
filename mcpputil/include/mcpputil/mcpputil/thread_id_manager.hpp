@@ -13,7 +13,7 @@ namespace mcpputil
   /**
    * \brief Class that establishes unique mapping between OS thread handles and low unique ids.
    **/
-  class thread_id_manager_t : public singleton_t<thread_id_manager_t>
+  class MCPPUTIL_DLL_PUBLIC thread_id_manager_t : public singleton_t<thread_id_manager_t>
   {
   public:
     /**

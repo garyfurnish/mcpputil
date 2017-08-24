@@ -6,7 +6,7 @@ namespace mcpputil
    * \brief Singleton CRTP class.
    **/
   template <typename T>
-  class singleton_t
+  class MCPPUTIL_PUBLIC singleton_t
   {
   public:
     /**
