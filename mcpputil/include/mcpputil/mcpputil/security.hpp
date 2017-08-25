@@ -1,11 +1,11 @@
 #pragma once
 #include "intrinsics.hpp"
 #include <algorithm>
-// clang-format: off
-#include "warning_wrapper_pop.hpp"
+// clang-format off
 #include "warning_wrapper_push.hpp"
 #include <gsl/gsl>
-// clang-format: on
+#include "warning_wrapper_pop.hpp"
+// clang-format on
 #include <random>
 #include <stdexcept>
 namespace mcpputil

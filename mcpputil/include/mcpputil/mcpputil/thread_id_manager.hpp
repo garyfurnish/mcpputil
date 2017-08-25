@@ -13,7 +13,7 @@ namespace mcpputil
   /**
    * \brief Class that establishes unique mapping between OS thread handles and low unique ids.
    **/
-  class MCPPUTIL_DLL_PUBLIC thread_id_manager_t : public singleton_t<thread_id_manager_t>
+  class MCPPUTIL_DLL_PUBLIC thread_id_manager_t
   {
   public:
     /**
@@ -114,12 +114,14 @@ namespace mcpputil
      * \brief Max number of threads.
      **/
     id_type m_max_num_threads{0};
+#if !defined(_WIN32)
     /**
      * \brief Fast lookup of thread id.
      **/
     static thread_local id_type t_thread_id;
+#endif
   };
-
+#if !defined(_WIN32)
   inline auto thread_id_manager_t::current_thread_id() const -> id_type
   {
     if (mcpputil_unlikely(t_thread_id == ::std::numeric_limits<id_type>::max())) {
@@ -134,6 +136,8 @@ namespace mcpputil
     }
     return t_thread_id;
   }
+#endif
+  MCPPUTIL_DLL_PUBLIC thread_id_manager_t& get_thread_id_manager();
   inline thread_id_manager_t::id_type thread_id_manager_t::max_threads() const noexcept
   {
     return m_max_num_threads;

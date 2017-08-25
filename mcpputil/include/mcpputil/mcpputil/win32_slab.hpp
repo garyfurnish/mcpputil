@@ -7,7 +7,7 @@ namespace mcpputil
   /**
    * \brief Slab allocator backed around virtual alloc.
    **/
-  class slab_t
+  class MCPPUTIL_DLL_PUBLIC slab_t
   {
   public:
     using value_type = uint8_t;

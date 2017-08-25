@@ -20,24 +20,24 @@ go_bandit([]() {
       manager.release();
     });
     it("manager test", []() {
-      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
-      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
-      mcpputil::thread_id_manager_t::gs().remove_current_thread();
-      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
-      AssertThat(mcpputil::thread_id_manager_t::gs().add_current_thread(), Equals(0));
+      AssertThat(mcpputil::get_thread_id_manager().add_current_thread(), Equals(0));
+      AssertThat(mcpputil::get_thread_id_manager().add_current_thread(), Equals(0));
+      mcpputil::get_thread_id_manager().remove_current_thread();
+      AssertThat(mcpputil::get_thread_id_manager().add_current_thread(), Equals(0));
+      AssertThat(mcpputil::get_thread_id_manager().add_current_thread(), Equals(0));
       ::std::atomic<bool> success{false};
       auto test_thread = [&success]() {
-        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+        if (mcpputil::get_thread_id_manager().add_current_thread() != 1) {
           return;
         }
-        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+        if (mcpputil::get_thread_id_manager().add_current_thread() != 1) {
           return;
         }
-        mcpputil::thread_id_manager_t::gs().remove_current_thread();
-        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+        mcpputil::get_thread_id_manager().remove_current_thread();
+        if (mcpputil::get_thread_id_manager().add_current_thread() != 1) {
           return;
         }
-        if (mcpputil::thread_id_manager_t::gs().add_current_thread() != 1) {
+        if (mcpputil::get_thread_id_manager().add_current_thread() != 1) {
           return;
         }
         success = true;
