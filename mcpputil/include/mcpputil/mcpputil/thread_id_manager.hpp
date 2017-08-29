@@ -136,7 +136,7 @@ namespace mcpputil
     return t_thread_id;
   }
 #endif
-  MCPPUTIL_DLL_PUBLIC thread_id_manager_t& get_thread_id_manager();
+  MCPPUTIL_DLL_PUBLIC thread_id_manager_t &get_thread_id_manager();
   inline thread_id_manager_t::id_type thread_id_manager_t::max_threads() const noexcept
   {
     return m_max_num_threads;

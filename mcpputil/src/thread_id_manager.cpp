@@ -2,30 +2,30 @@
 #include <mcpputil/mcpputil/thread_id_manager.hpp>
 namespace mcpputil
 {
-	MCPPUTIL_DLL_PUBLIC thread_id_manager_t& get_thread_id_manager()
-	{
-		static thread_id_manager_t tim{};
-		return tim;
-	}
+  MCPPUTIL_DLL_PUBLIC thread_id_manager_t &get_thread_id_manager()
+  {
+    static thread_id_manager_t tim{};
+    return tim;
+  }
 #ifdef _WINDLL
-	thread_local thread_id_manager_t::id_type t_thread_id{ ::std::numeric_limits<thread_id_manager_t::id_type>::max() };
-	auto thread_id_manager_t::current_thread_id() const -> id_type
-	{
-		if (mcpputil_unlikely(t_thread_id == ::std::numeric_limits<id_type>::max())) {
-			throw ::std::runtime_error("thread_id_manager_t current_thread_id not set");
-		}
-		return t_thread_id;
-	}
-	auto thread_id_manager_t::current_thread_id_noexcept() const noexcept -> ::boost::optional<id_type>
-	{
-		if (mcpputil_unlikely(t_thread_id == ::std::numeric_limits<id_type>::max())) {
-			return ::boost::none;
-		}
-		return t_thread_id;
-	}
+  thread_local thread_id_manager_t::id_type t_thread_id{::std::numeric_limits<thread_id_manager_t::id_type>::max()};
+  auto thread_id_manager_t::current_thread_id() const -> id_type
+  {
+    if (mcpputil_unlikely(t_thread_id == ::std::numeric_limits<id_type>::max())) {
+      throw ::std::runtime_error("thread_id_manager_t current_thread_id not set");
+    }
+    return t_thread_id;
+  }
+  auto thread_id_manager_t::current_thread_id_noexcept() const noexcept -> ::boost::optional<id_type>
+  {
+    if (mcpputil_unlikely(t_thread_id == ::std::numeric_limits<id_type>::max())) {
+      return ::boost::none;
+    }
+    return t_thread_id;
+  }
 #else
-	thread_local thread_id_manager_t::id_type thread_id_manager_t::t_thread_id{
-		::std::numeric_limits<thread_id_manager_t::id_type>::max() };
+  thread_local thread_id_manager_t::id_type thread_id_manager_t::t_thread_id{
+      ::std::numeric_limits<thread_id_manager_t::id_type>::max()};
 #endif
   thread_id_manager_t::thread_id_manager_t() = default;
   void thread_id_manager_t::set_max_tls_pointers(ptr_index sz)
