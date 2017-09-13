@@ -161,7 +161,8 @@ namespace mcpputil
      **/
     ::pthread_cond_t m_cond;
     /**
-     * \brief Internal mutex needed for protection since pthread requires a pthread mutex.
+     * \brief Internal mutex needed for protection since pthread requires a
+     *pthread mutex.
      **/
     pthread_mutex_t m_mutex;
   };
@@ -174,5 +175,5 @@ namespace mcpputil
    **/
   template <typename T>
   using unique_lock_t = ::std::unique_lock<T>;
-}
+} // namespace mcpputil
 #endif

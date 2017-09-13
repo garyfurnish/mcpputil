@@ -121,7 +121,9 @@ namespace mcpputil::containers
     }
     auto ii = insert(value_type());
     if (!ii.second) {
-      throw ::std::out_of_range("mcpputil: backed_ordered_multimap full: d7a2ae32-ba84-426c-a5ff-f2d7eb33f735");
+      throw ::std::out_of_range(
+          "mcpputil: backed_ordered_multimap full: "
+          "d7a2ae32-ba84-426c-a5ff-f2d7eb33f735");
     }
     return ii.first->second;
   }
@@ -134,7 +136,9 @@ namespace mcpputil::containers
     }
     auto ii = insert(value_type());
     if (!ii.second) {
-      throw ::std::out_of_range("mcpputil: backed_ordered_multimap full: f1620786-17eb-4f0d-b582-31396b9fe1c3");
+      throw ::std::out_of_range(
+          "mcpputil: backed_ordered_multimap full: "
+          "f1620786-17eb-4f0d-b582-31396b9fe1c3");
     }
     return ii.first->second;
   }
@@ -280,4 +284,4 @@ namespace mcpputil::containers
     *remove_it = ::std::move(v);
     return ::std::make_pair(remove_it, true);
   }
-}
+} // namespace mcpputil::containers

@@ -188,4 +188,4 @@ namespace mcpputil
   struct mcpputil_allocator_deleter_t<Type, aligned_allocator_t<void, Alignment>> {
     using type = aligned_deleter_t<Alignment>;
   };
-}
+} // namespace mcpputil

@@ -92,4 +92,4 @@ namespace mcpputil
     {
     }
   };
-}
+} // namespace mcpputil

@@ -60,5 +60,5 @@ namespace mcpputil
   template <>
   MCPPUTIL_DLL_PUBLIC::std::ostream &operator<<(::std::ostream &stream, const memory_range_t<void *> &range);
   using system_memory_range_t = memory_range_t<uint8_t *>;
-}
+} // namespace mcpputil
 #include "memory_range_impl.hpp"

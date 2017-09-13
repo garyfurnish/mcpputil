@@ -111,6 +111,6 @@ namespace mcpputil
      **/
     static size_t s_page_size;
   };
-}
+} // namespace mcpputil
 #include "win32_slab_impl.hpp"
 #endif

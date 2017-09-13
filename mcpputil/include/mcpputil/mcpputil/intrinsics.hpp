@@ -7,7 +7,7 @@ namespace mcpputil
 #else
   constexpr const bool c_intrin_avx_512f = false;
 #endif
-}
+} // namespace mcpputil
 #ifndef _WIN32
 // NOT WIN32
 #include <emmintrin.h>

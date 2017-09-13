@@ -22,4 +22,4 @@ namespace mcpputil
     auto offset = reinterpret_cast<uint8_t *>(&vec.front()) - reinterpret_cast<uint8_t *>(bbegin);
     return offset;
   }
-}
+} // namespace mcpputil

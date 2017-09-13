@@ -86,25 +86,30 @@ namespace mcpputil::containers
     /**
      * \brief Inserts a new value_type move constructed from the pair.
      *
-     * Complexity: Logarithmic search time plus linear insertion to the elements with bigger keys than x.
-     * Note: If an element it's inserted it might invalidate elements.
-     * @return The bool component of the returned pair is true if and only if the insertion takes place, and the iterator
-     *component of the pair points to the element with key equivalent to the key of x.
+     * Complexity: Logarithmic search time plus linear insertion to the elements
+     *with bigger keys than x. Note: If an element it's inserted it might
+     *invalidate elements.
+     * @return The bool component of the returned pair is true if and only if the
+     *insertion takes place, and the iterator component of the pair points to the
+     *element with key equivalent to the key of x.
      **/
     auto insert(const value_type &) -> std::pair<iterator, bool>;
     /**
      * \brief Inserts a new value_type move constructed from the pair.
      *
-     * Complexity: Logarithmic search time plus linear insertion to the elements with bigger keys than x.
-     * Note: If an element it's inserted it might invalidate elements.
-     * @return The bool component of the returned pair is true if and only if the insertion takes place, and the iterator
-     *component of the pair points to the element with key equivalent to the key of x.
+     * Complexity: Logarithmic search time plus linear insertion to the elements
+     *with bigger keys than x. Note: If an element it's inserted it might
+     *invalidate elements.
+     * @return The bool component of the returned pair is true if and only if the
+     *insertion takes place, and the iterator component of the pair points to the
+     *element with key equivalent to the key of x.
      **/
     auto insert(value_type &&) -> ::std::pair<iterator, bool>;
     /**
      * \brief Erases all elements in the container with key equivalent to x.
      *
-     * Complexity: Logarithmic search time plus erasure time linear to the elements with bigger keys.
+     * Complexity: Logarithmic search time plus erasure time linear to the
+     *elements with bigger keys.
      * @return Returns the number of erased elements.
      **/
     auto erase(const key_type &) -> size_type;
@@ -113,15 +118,16 @@ namespace mcpputil::containers
      *
      * Complexity: Linear to the elements with keys bigger than p
      * Note: Invalidates elements with keys not less than the erased element.
-     * @return An iterator pointing to the element immediately following q prior to the element being erased. If no such element
-     *exists, returns end().
+     * @return An iterator pointing to the element immediately following q prior
+     *to the element being erased. If no such element exists, returns end().
      **/
     auto erase(const_iterator) -> iterator;
     /**
      * \brief Erases all the elements in the range [first, last).
      *
      *Complexity: size()*N where N is the distance from first to last.
-     *Complexity: Logarithmic search time plus erasure time linear to the elements with bigger keys.
+     *Complexity: Logarithmic search time plus erasure time linear to the elements
+     *with bigger keys.
      * @return Returns last.
      **/
     auto erase(const_iterator begin_iterator, const_iterator end_iterator) -> iterator;
@@ -175,5 +181,5 @@ namespace mcpputil::containers
     size_t m_capacity{0};
     key_compare m_compare;
   };
-}
+} // namespace mcpputil::containers
 #include "backed_ordered_map_impl.hpp"

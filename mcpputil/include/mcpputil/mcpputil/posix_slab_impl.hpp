@@ -122,7 +122,8 @@ namespace mcpputil
       if (ret != 0) {
         assert(false);
       }
-      // address is known to be a good hole for a slab as long as nothing else is mmaped.
+      // address is known to be a good hole for a slab as long as nothing else is
+      // mmaped.
       return addr;
     }
     return nullptr;
@@ -135,5 +136,5 @@ namespace mcpputil
   {
     return reinterpret_cast<uint8_t *>(m_addr) + m_size;
   }
-}
+} // namespace mcpputil
 #endif

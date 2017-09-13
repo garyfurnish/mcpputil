@@ -344,4 +344,4 @@ namespace mcpputil
   {
     return ::std::upper_bound(begin(), end(), x, m_compare);
   }
-}
+} // namespace mcpputil

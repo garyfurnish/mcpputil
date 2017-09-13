@@ -42,5 +42,5 @@ namespace mcpputil
   {
     return {begin(), end()};
   }
-}
+} // namespace mcpputil
 #endif

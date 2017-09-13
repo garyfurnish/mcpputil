@@ -23,4 +23,4 @@ namespace mcpputil
     ::boost::container::flat_set<memory_range_type, ::std::less<>, memory_range_allocator_type> m_include;
     ::boost::container::flat_set<memory_range_type, ::std::less<>, memory_range_allocator_type> m_exclude;
   };
-}
+} // namespace mcpputil

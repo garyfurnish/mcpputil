@@ -10,7 +10,8 @@
 namespace mcpputil
 {
   /**
-   * \brief Class that establishes unique mapping between OS thread handles and low unique ids.
+   * \brief Class that establishes unique mapping between OS thread handles and
+   *low unique ids.
    **/
   class MCPPUTIL_DLL_PUBLIC thread_id_manager_t
   {
@@ -193,4 +194,4 @@ namespace mcpputil
     m_ptr_array[::gsl::narrow<size_t>(index)] = ptr;
     return true;
   }
-}
+} // namespace mcpputil

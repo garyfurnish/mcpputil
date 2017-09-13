@@ -19,9 +19,9 @@ namespace mcpputil
     typename queue_type::iterator it;
     {
       MCPPALLOC_CONCURRENCY_LOCK_GUARD(m_mutex);
-      // this could theoretically throw from oom but we can't do anything about it.
-      // throwing here would have no negative consequences, so don't do anything.
-      // add a new waiter to queue.
+      // this could theoretically throw from oom but we can't do anything about
+      // it. throwing here would have no negative consequences, so don't do
+      // anything. add a new waiter to queue.
       m_queued.emplace_back();
       it = (--m_queued.end());
       // acquire the lock to wait on.
@@ -102,4 +102,4 @@ namespace mcpputil
     // forward to internal wait.
     wait(::std::forward<Lock>(lock), []() { return true; }, false);
   }
-}
+} // namespace mcpputil

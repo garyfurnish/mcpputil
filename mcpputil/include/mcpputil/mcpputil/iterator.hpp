@@ -9,4 +9,4 @@ namespace mcpputil
   {
     return ::std::reverse_iterator<Iterator>(i);
   }
-}
+} // namespace mcpputil

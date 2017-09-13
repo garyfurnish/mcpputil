@@ -114,4 +114,4 @@ namespace mcpputil
     return static_cast<const vector_extrensic_allocator_t<::std::pair<K_, V_>> &>(rhs) !=
            static_cast<const vector_extrensic_allocator_t<::std::pair<K_, V_>> &>(lhs);
   }
-}
+} // namespace mcpputil

@@ -9,4 +9,4 @@ namespace mcpputil
   {
     return ~t;
   }
-}
+} // namespace mcpputil

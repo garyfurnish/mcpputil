@@ -3,7 +3,8 @@
 namespace mcpputil
 {
   /**
-   * \brief Traits for objects that have a view like interface (including containers).
+   * \brief Traits for objects that have a view like interface (including
+   *containers).
    **/
   template <typename T>
   class view_traits_t
@@ -17,4 +18,4 @@ namespace mcpputil
     using index_type = decltype(::std::declval<T>().size());
     using difference_type = typename ::std::iterator_traits<typename T::iterator>::difference_type;
   };
-}
+} // namespace mcpputil

@@ -13,4 +13,4 @@ namespace mcpputil
   {
     ptr = reinterpret_cast<Ptr_Underlying *>(reinterpret_cast<uint8_t *>(ptr) + offset);
   }
-}
+} // namespace mcpputil

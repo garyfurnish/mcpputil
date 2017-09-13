@@ -90,5 +90,5 @@ namespace mcpputil
     void *addr = ::VirtualAlloc(nullptr, size, MEM_RESERVE, PAGE_READWRITE);
     return addr;
   }
-}
+} // namespace mcpputil
 #endif

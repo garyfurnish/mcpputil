@@ -70,4 +70,4 @@ namespace mcpputil
   template <typename Pointer_Type>
   thread_local typename thread_local_pointer_t<Pointer_Type>::pointer_type thread_local_pointer_t<Pointer_Type>::s_tlks;
 #endif
-}
+} // namespace mcpputil

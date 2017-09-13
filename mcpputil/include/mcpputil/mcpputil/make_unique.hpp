@@ -31,4 +31,4 @@ namespace mcpputil
     }
     return ::std::unique_ptr<T, typename mcpputil_allocator_deleter_t<T, Allocator>::type>(ptr);
   }
-}
+} // namespace mcpputil

@@ -53,7 +53,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("constructor 02989d63-9bf2-4c54-8bd3-f2319c3f5c1e", []() {
-      //    flat_set_extrensic_allocator_t(flat_set_extrensic_allocator_t &&other);
+      //    flat_set_extrensic_allocator_t(flat_set_extrensic_allocator_t
+      //    &&other);
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
       flat_set_extrensic_allocator_t<int> set2{::std::move(set)};
@@ -67,7 +68,8 @@ void test_flat_set_extrensic_allocator()
 
     });
     it("constructor ee50dd07-6f66-45e9-b73c-66c87fcf5468", []() {
-      //    flat_set_extrensic_allocator_t(flat_set_extrensic_allocator_t &&other);
+      //    flat_set_extrensic_allocator_t(flat_set_extrensic_allocator_t
+      //    &&other);
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
       flat_set_extrensic_allocator_t<int> set2{::std::move(set)};
@@ -93,8 +95,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert da003908-0e0d-4c6c-9493-2fdee9480b8e", []() {
-      // std::pair<iterator, bool> insert(const value_type &value, Allocator &allocator);
-      // test adding to empty set
+      // std::pair<iterator, bool> insert(const value_type &value, Allocator
+      // &allocator); test adding to empty set
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set;
       int i = 3;
@@ -104,8 +106,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert 21412e06-df25-4eee-8a26-e7b333ec9a16", []() {
-      // std::pair<iterator, bool> insert(const value_type &value, Allocator &allocator);
-      // test to make sure can't add duplicates.
+      // std::pair<iterator, bool> insert(const value_type &value, Allocator
+      // &allocator); test to make sure can't add duplicates.
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
       int i = 3;
@@ -118,8 +120,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert 8628718a-c4dd-463c-a38a-55798e509fac", []() {
-      // std::pair<iterator, bool> insert(value_type &&value, Allocator &allocator);
-      // test adding to empty set
+      // std::pair<iterator, bool> insert(value_type &&value, Allocator
+      // &allocator); test adding to empty set
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set;
       set.insert(3, alloc);
@@ -128,8 +130,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert 8628718a-c4dd-463c-a38a-55798e509fac", []() {
-      // std::pair<iterator, bool> insert(value_type &&value, Allocator &allocator);
-      // test to make sure can't add duplicates.
+      // std::pair<iterator, bool> insert(value_type &&value, Allocator
+      // &allocator); test to make sure can't add duplicates.
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
       auto ret = set.insert(3, alloc);
@@ -140,7 +142,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert_search df30b3ac-1ae9-4244-a3c4-4536f78cf7bf", []() {
-      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test invalid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -153,7 +156,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert_search 9a518d8c-2dad-4f19-bb33-792b55afe57b", []() {
-      //    iterator insert_search(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert_search(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test valid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -165,7 +169,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert_search 6b649432-c3f5-4036-b852-8ba4e9110fe3", []() {
-      //    iterator insert_search(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert_search(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test adding to empty set
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set;
@@ -178,7 +183,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert_search 4e250601-f6de-4ae9-b473-f2a6641d44ab", []() {
-      //    iterator insert_search(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert_search(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test to make sure can't add duplicates
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -192,7 +198,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert_search 599e97e2-69a9-476c-986c-db969a77d1ba", []() {
-      //    iterator insert(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test invalid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -204,7 +211,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert_search 962a6c15-d76a-461d-ae6c-c8d4cc592b31", []() {
-      //    iterator insert_search(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert_search(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test valid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -215,7 +223,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert_search d8d60193-efe2-4719-98d3-8735ac0ba4a4", []() {
-      //    iterator insert_search(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert_search(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test adding to empty set
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set;
@@ -227,7 +236,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert_search 1cf3ee5d-5411-46bf-a021-9283eb9b1cdd", []() {
-      //    iterator insert_search(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert_search(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test to make sure can't add duplicates
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -240,7 +250,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert e2b4ca85-0313-4fcb-9b9d-f175d77df462", []() {
-      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test invalid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -253,7 +264,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert 3e56bc69-5f24-4149-a914-cf3c7bf8bd61", []() {
-      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test valid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -265,7 +277,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert 0a333720-cc93-48cc-8fed-16a112476e41", []() {
-      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test adding to empty set
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set;
@@ -278,7 +291,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert 28b3f378-68f1-4bfa-afd4-697bdae08d68", []() {
-      //    iterator insert(const_iterator hint, const value_type &value, Allocator &allocator);
+      //    iterator insert(const_iterator hint, const value_type &value,
+      //    Allocator &allocator);
       // test to make sure can't add duplicates
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -292,7 +306,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert 599e97e2-69a9-476c-986c-db969a77d1ba", []() {
-      //    iterator insert(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test invalid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -304,7 +319,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert 4c9ee0ae-ab00-4027-91ae-3c644c45a217", []() {
-      //    iterator insert(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test valid hint
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -315,7 +331,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert 06fb993c-6bad-47f1-9238-aed5e2cb4803", []() {
-      //    iterator insert(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test adding to empty set
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set;
@@ -327,7 +344,8 @@ void test_flat_set_extrensic_allocator()
     });
 
     it("insert c482dd80-c7d6-4a55-9142-ef40ce5cb2e9", []() {
-      //    iterator insert(const_iterator hint, value_type&&, Allocator &allocator);
+      //    iterator insert(const_iterator hint, value_type&&, Allocator
+      //    &allocator);
       // test to make sure can't add duplicates
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
@@ -351,7 +369,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("insert 4bef14f0-4c22-444f-9000-e957a8da3896", []() {
-      //    void insert(std::initializer_list<value_type> ilist, Allocator &allocator);
+      //    void insert(std::initializer_list<value_type> ilist, Allocator
+      //    &allocator);
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
       set.insert({6, 7, 8, 9}, alloc);
@@ -361,7 +380,8 @@ void test_flat_set_extrensic_allocator()
       set.destroy(alloc);
     });
     it("inset_sorted_contiguous 95428789-67b9-4477-a155-e99a48db9d3f", []() {
-      //    void insert_sorted_contiguous(InputIt first, InputIt last, Allocator &allocator);
+      //    void insert_sorted_contiguous(InputIt first, InputIt last, Allocator
+      //    &allocator);
       ::std::allocator<int> alloc;
       flat_set_extrensic_allocator_t<int> set{{3, 5, 7}, alloc};
       ::std::array<int, 3> ia{{7, 8, 9}};

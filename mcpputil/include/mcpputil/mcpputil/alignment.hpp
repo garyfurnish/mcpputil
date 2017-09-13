@@ -73,4 +73,4 @@ namespace mcpputil
   {
     return reinterpret_cast<T *>(align_pow2(reinterpret_cast<size_t>(iptr), align_pow));
   }
-}
+} // namespace mcpputil

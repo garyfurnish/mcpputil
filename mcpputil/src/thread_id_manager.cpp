@@ -35,7 +35,9 @@ namespace mcpputil
       throw ::std::runtime_error("thread_id_manager_t max tls pointers already set.");
     }
     if (m_max_num_threads == 0) {
-      throw ::std::runtime_error("thread_id_manager_t max num threads must be set before setting max tls pointers.");
+      throw ::std::runtime_error(
+          "thread_id_manager_t max num threads must be "
+          "set before setting max tls pointers.");
     }
     m_max_tls_pointers = sz;
     m_ptr_array.resize(::gsl::narrow<size_t>(m_max_num_threads * m_max_tls_pointers));

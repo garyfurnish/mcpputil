@@ -33,4 +33,4 @@ namespace mcpputil
     u.i = in;
     return u.t;
   }
-}
+} // namespace mcpputil

@@ -4,12 +4,14 @@
 namespace mcpputil
 {
   /**
-   * \brief Replacement for ::std::condition_variable_any that uses a given allocator.
+   * \brief Replacement for ::std::condition_variable_any that uses a given
+   *allocator.
    *
-   * This condition variable is guarenteed to be reenterant at the expense of possibly performance.
-   * It can not use most kernel functions since on many oses conditional variables use mutexes internally.
-   * Mutexes and yield are safe to use on osx/linux.
-   * Therefore this works by maintaining a queue of mutexes that can be unlocked to notify waiting threads.
+   * This condition variable is guarenteed to be reenterant at the expense of
+   *possibly performance. It can not use most kernel functions since on many oses
+   *conditional variables use mutexes internally. Mutexes and yield are safe to
+   *use on osx/linux. Therefore this works by maintaining a queue of mutexes that
+   *can be unlocked to notify waiting threads.
    * @tparam Allocator allocator to use for internal memory allocation.
    **/
   template <typename Allocator>
@@ -56,7 +58,8 @@ namespace mcpputil
      * Wait until signaled and pred is true.
      * @param lock Lock to unlock while waiting and reacquire afterwards.
      * @param pred Predicate to test.
-     * @param _precheck_pred Should the predicate be tested prior to notification waiting.
+     * @param _precheck_pred Should the predicate be tested prior to notification
+     *waiting.
      **/
     template <typename Lock, typename Predicate>
     void wait(Lock &&lock, Predicate &&pred, bool _precheck_pred) REQUIRES(!m_mutex) NO_THREAD_SAFETY_ANALYSIS;
@@ -84,5 +87,5 @@ namespace mcpputil
      **/
     ::mcpputil::mutex_t m_mutex;
   };
-}
+} // namespace mcpputil
 #include "condition_variable_impl.hpp"

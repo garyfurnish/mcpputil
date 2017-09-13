@@ -84,4 +84,4 @@ namespace mcpputil
     }
     return current;
   }
-}
+} // namespace mcpputil

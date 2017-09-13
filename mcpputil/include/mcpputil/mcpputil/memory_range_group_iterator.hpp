@@ -10,4 +10,4 @@ namespace mcpputil
 
   protected:
   }
-}
+} // namespace mcpputil

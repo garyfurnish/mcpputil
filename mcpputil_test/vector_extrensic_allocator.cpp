@@ -86,7 +86,8 @@ void test_vector_extrensic_allocator()
       v.destroy(alloc);
     });
     it("insert 5336be58-122c-47b8-a557-5c73629025de", []() {
-      //    iterator insert(const_iterator pos, const T &value, Allocator &allocator);
+      //    iterator insert(const_iterator pos, const T &value, Allocator
+      //    &allocator);
       auto alloc = ::std::allocator<int>();
       ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
       ::std::array<int, 6> b{{1, 2, 6, 3, 4, 5}};
@@ -98,7 +99,8 @@ void test_vector_extrensic_allocator()
       v.destroy(alloc);
     });
     it("insert 48ec2d6b-28ab-42e5-b54f-7d46002de612", []() {
-      //    iterator insert(const_iterator pos, T &&value, Allocator &allocator);
+      //    iterator insert(const_iterator pos, T &&value, Allocator
+      //    &allocator);
       auto alloc = ::std::allocator<int>();
       ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
       ::std::array<int, 6> b{{1, 2, 6, 3, 4, 5}};
@@ -109,7 +111,8 @@ void test_vector_extrensic_allocator()
       v.destroy(alloc);
     });
     it("insert 48ec2d6b-28ab-42e5-b54f-7d46002de612", []() {
-      //    iterator insert(const_iterator pos, index_type count, const T &value, Allocator &allocator);
+      //    iterator insert(const_iterator pos, index_type count, const T
+      //    &value, Allocator &allocator);
       auto alloc = ::std::allocator<int>();
       ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
       ::std::array<int, 7> b{{1, 2, 6, 6, 3, 4, 5}};
@@ -121,7 +124,8 @@ void test_vector_extrensic_allocator()
     });
 
     it("insert 4ad86ffe-93df-4493-b228-efa6c43c18d3", []() {
-      //    iterator insert(const_iterator pos, InputIt first, InputIt last, Allocator &allocator)
+      //    iterator insert(const_iterator pos, InputIt first, InputIt last,
+      //    Allocator &allocator)
       auto alloc = ::std::allocator<int>();
       ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
       ::std::array<int, 7> b{{1, 2, 6, 7, 3, 4, 5}};
@@ -133,7 +137,8 @@ void test_vector_extrensic_allocator()
       v.destroy(alloc);
     });
     it("insert a33a567c-a099-4e53-a8c1-391385d3974f", []() {
-      //    iterator insert(const_iterator pos, std::initializer_list<T> ilist, Allocator &allocator);
+      //    iterator insert(const_iterator pos, std::initializer_list<T> ilist,
+      //    Allocator &allocator);
       auto alloc = ::std::allocator<int>();
       ::std::array<int, 5> a{{1, 2, 3, 4, 5}};
       ::std::array<int, 7> b{{1, 2, 6, 7, 3, 4, 5}};

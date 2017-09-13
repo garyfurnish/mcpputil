@@ -11,7 +11,8 @@
 namespace mcpputil
 {
   /**
-   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a deadlock avoidance algorithm to avoid deadlock.
+   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a
+   *deadlock avoidance algorithm to avoid deadlock.
    **/
   template <typename Lockable1, typename Lockable2>
   void lock(Lockable1 &lock1, Lockable2 &lock2) ACQUIRE(lock1, lock2) NO_THREAD_SAFETY_ANALYSIS
@@ -19,7 +20,8 @@ namespace mcpputil
     ::std::lock(lock1, lock2);
   }
   /**
-   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a deadlock avoidance algorithm to avoid deadlock.
+   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a
+   *deadlock avoidance algorithm to avoid deadlock.
    **/
   template <typename Lockable1, typename Lockable2, typename Lockable3>
   void lock(Lockable1 &lock1, Lockable2 &lock2, Lockable3 &lock3) ACQUIRE(lock1, lock2, lock3) NO_THREAD_SAFETY_ANALYSIS
@@ -27,7 +29,8 @@ namespace mcpputil
     ::std::lock(lock1, lock2, lock3);
   }
   /**
-   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a deadlock avoidance algorithm to avoid deadlock.
+   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a
+   *deadlock avoidance algorithm to avoid deadlock.
    **/
   template <typename Lockable1, typename Lockable2, typename Lockable3, typename Lockable4>
   void lock(Lockable1 &lock1, Lockable2 &lock2, Lockable3 &lock3, Lockable4 &lock4)
@@ -36,7 +39,8 @@ namespace mcpputil
     ::std::lock(lock1, lock2, lock3, lock4);
   }
   /**
-   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a deadlock avoidance algorithm to avoid deadlock.
+   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a
+   *deadlock avoidance algorithm to avoid deadlock.
    **/
   template <typename Lockable1, typename Lockable2, typename Lockable3, typename Lockable4, typename Lockable5>
   void lock(Lockable1 &lock1, Lockable2 &lock2, Lockable3 &lock3, Lockable4 &lock4, Lockable5 &lock5)
@@ -45,7 +49,8 @@ namespace mcpputil
     ::std::lock(lock1, lock2, lock3, lock4, lock5);
   }
   /**
-   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a deadlock avoidance algorithm to avoid deadlock.
+   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a
+   *deadlock avoidance algorithm to avoid deadlock.
    **/
   template <typename Lockable1,
             typename Lockable2,
@@ -59,7 +64,8 @@ namespace mcpputil
     ::std::lock(lock1, lock2, lock3, lock4, lock5, lock6);
   }
   /**
-   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a deadlock avoidance algorithm to avoid deadlock.
+   * \brief Locks the given Lockable objects lock1, lock2, ..., lockn using a
+   *deadlock avoidance algorithm to avoid deadlock.
    **/
   template <typename Lockable1,
             typename Lockable2,
@@ -176,7 +182,7 @@ namespace mcpputil
     T1 &m_T1;
     T2 &m_T2;
   } SCOPED_CAPABILITY;
-}
+} // namespace mcpputil
 #ifndef __APPLE__
 namespace mcpputil
 {
@@ -251,7 +257,7 @@ namespace mcpputil
      **/
     ::std::mutex m_mutex;
   };
-}
+} // namespace mcpputil
 #endif
 #include "concurrency_apple.hpp"
 #define MCPPALLOC_CONCURRENCY_LOCK_GUARD_MERGE_(a, b) a##b
@@ -338,7 +344,8 @@ namespace mcpputil
     ::std::atomic<bool> m_lock;
   };
   /**
-   * \brief The class double_lock_t is a general-purpose mutex ownership wrapper for two Lockables.
+   * \brief The class double_lock_t is a general-purpose mutex ownership wrapper
+   *for two Lockables.
    *
    * This is not compatible with clang thread safety analysis yet.
    * Uses a deadlock avoidance algorithm to avoid deadlock.
@@ -417,4 +424,4 @@ namespace mcpputil
     Lockable1 *m_lock1;
     Lockable2 *m_lock2;
   };
-}
+} // namespace mcpputil

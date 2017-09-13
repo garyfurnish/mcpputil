@@ -55,4 +55,4 @@ namespace mcpputil
     c.insert(origlb, ::std::forward<T>(val));
     return true;
   }
-}
+} // namespace mcpputil

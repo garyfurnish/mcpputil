@@ -7,5 +7,5 @@ namespace mcpputil
     {
       return static_cast<::std::size_t>(x);
     }
-  }
-}
+  } // namespace literals
+} // namespace mcpputil

@@ -44,4 +44,4 @@ namespace mcpputil
     t2 = ::std::chrono::high_resolution_clock::now();
     return ::std::make_tuple(::std::chrono::duration_cast<::std::chrono::duration<double>>(t2 - t1));
   }
-}
+} // namespace mcpputil

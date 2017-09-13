@@ -122,6 +122,6 @@ namespace mcpputil
   {
     return memory_range_type{begin(), end()};
   }
-}
+} // namespace mcpputil
 #include "posix_slab_impl.hpp"
 #endif

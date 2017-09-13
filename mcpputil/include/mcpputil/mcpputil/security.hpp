@@ -36,7 +36,7 @@ namespace mcpputil
         *p++ = 0;
       }
     }
-  }
+  } // namespace details
   inline void secure_zero_stream(void *s, size_t n)
   {
 #if defined(__AVX__) && !defined(__APPLE__)
@@ -180,4 +180,4 @@ namespace mcpputil
   {
     secure_zero(&s, sizeof(s));
   }
-}
+} // namespace mcpputil

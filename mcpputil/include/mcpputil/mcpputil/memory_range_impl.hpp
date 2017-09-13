@@ -103,4 +103,4 @@ namespace mcpputil
   {
     return range.size();
   }
-}
+} // namespace mcpputil

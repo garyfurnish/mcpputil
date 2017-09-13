@@ -7,9 +7,10 @@ namespace mcpputil
   /**
    * \brief Partition a container over some other container using a lambda.
    *
-   * On every element of over container, call F(over container element, make_tuple(begin,end)).
-   * Where begin and end are iterators over a segment of the partitioned container
-   * such that the segments are as close to equal length as possible.
+   * On every element of over container, call F(over container element,
+   *make_tuple(begin,end)). Where begin and end are iterators over a segment of
+   *the partitioned container such that the segments are as close to equal length
+   *as possible.
    * @param pc Container to partition
    * @param oc Container to partition over.
    * @param f Function to call on over container elements and segments.
@@ -31,4 +32,4 @@ namespace mcpputil
     }
     f(oc.back(), ::std::make_tuple(pc.begin() + data_per_partition * (num_over - 1), pc.end()));
   }
-}
+} // namespace mcpputil

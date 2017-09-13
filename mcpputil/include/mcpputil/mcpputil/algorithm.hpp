@@ -16,4 +16,4 @@ namespace mcpputil
       f(val);
     }
   }
-}
+} // namespace mcpputil

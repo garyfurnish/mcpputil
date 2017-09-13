@@ -537,4 +537,4 @@ namespace mcpputil
     swap(m_size, other.m_size);
     swap(m_capacity, other.m_capacity);
   }
-}
+} // namespace mcpputil
