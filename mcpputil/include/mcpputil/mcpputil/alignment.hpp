@@ -7,6 +7,7 @@ namespace mcpputil
    * \brief Default alignment on this system for mcpputils in bytes.
    **/
   static constexpr size_t c_alignment = 16;
+  static constexpr size_t cs_alignment = c_alignment;
   /**
    * \brief Default alignment on this system.
    **/
